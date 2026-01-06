@@ -1,0 +1,20 @@
+<section class="px-4 sm:px-6 lg:px-40 py-8 bg-[#f8f9fc]" id="courses-section">
+    <div class="layout-content-container max-w-[1200px] mx-auto">
+        <!-- Courses will be dynamically loaded here -->
+        <div id="courses-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Courses will be inserted here by JavaScript -->
+            <div class="text-center py-12 text-gray-500" id="loading-message">
+                <span class="material-symbols-outlined text-4xl mb-4 animate-spin">refresh</span>
+                <p>Loading courses...</p>
+            </div>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="flex justify-center mt-12 mb-16">
+            <button class="flex items-center gap-2 px-8 py-3 rounded-xl border border-primary text-primary font-bold hover:bg-primary hover:text-white transition-colors" id="load-more-btn">
+                Load More Courses
+                <span class="material-symbols-outlined">expand_more</span>
+            </button>
+        </div>
+    </div>
+</section>

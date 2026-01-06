@@ -1,0 +1,116 @@
+/* CTA section styles */
+#cta-section {
+    position: relative;
+    overflow: hidden;
+}
+
+#cta-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(19, 91, 236, 0.9) 0%, rgba(15, 75, 195, 0.9) 100%);
+    z-index: -1;
+}
+
+/* Decorative elements animation */
+#cta-section > div:first-child {
+    animation: float 8s ease-in-out infinite;
+}
+
+#cta-section > div:nth-child(2) {
+    animation: float 10s ease-in-out infinite reverse;
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.05); }
+}
+
+/* Button styles */
+#create-account-btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+#create-account-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+#create-account-btn:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+#create-account-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+#how-it-works-btn {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+#how-it-works-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.6s;
+}
+
+#how-it-works-btn:hover::before {
+    left: 100%;
+}
+
+#how-it-works-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Text animations */
+#cta-section h2 {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+#cta-section p {
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+#cta-section .flex {
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+#cta-section .mt-6 {
+    animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

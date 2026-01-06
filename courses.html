@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Explore Our Courses - QEFAS</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&family=Noto+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Tailwind Config -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/courses/css/styles.css">
+    <link rel="stylesheet" href="/courses/css/components/navbar.css">
+    <link rel="stylesheet" href="/courses/css/components/filters.css">
+    <link rel="stylesheet" href="/courses/css/components/course-card.css">
+    <link rel="stylesheet" href="/courses/css/components/value-banner.css">
+</head>
+<body class="bg-background-light text-[#111318] font-display">
+    <div class="flex min-h-screen flex-col">
+        <!-- Components will be loaded here -->
+        <div id="navbar-container"></div>
+        <div id="hero-container"></div>
+        <div id="filters-container"></div>
+        <main class="flex-1">
+            <div id="course-grid-container"></div>
+            <div id="value-proposition-container"></div>
+        </main>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="/courses/js/loader.js"></script>
+    <script src="/courses/js/main.js"></script>
+</body>
+</html>

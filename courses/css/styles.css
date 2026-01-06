@@ -1,0 +1,41 @@
+/* Custom scrollbar for clean look */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Smooth transitions */
+.course-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Loading animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.course-fade-in {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Category filter active state */
+.category-filter.active {
+    background-color: #135bec !important;
+    color: white !important;
+    box-shadow: 0 2px 8px rgba(19, 91, 236, 0.3);
+}
+
+.category-filter.active p {
+    color: white !important;
+}
+
+/* Pagination animation */
+#load-more-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(19, 91, 236, 0.2);
+}

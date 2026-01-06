@@ -1,0 +1,97 @@
+/* Custom scrollbar for clean look */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Navbar specific styles */
+.nav-link {
+    transition: all 0.2s ease-in-out;
+}
+
+.mobile-menu-toggle {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: block;
+    }
+}
+
+
+/* Hero specific styles */
+.hero-pattern {
+    background-color: #f8fafc;
+    background-image: 
+        radial-gradient(#135bec 0.5px, transparent 0.5px), 
+        radial-gradient(#135bec 0.5px, #f8fafc 0.5px);
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px;
+    opacity: 0.05;
+}
+
+
+
+/* Card components */
+.course-card {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.dark .course-card {
+    background: #151b2b;
+    border-color: #374151;
+}
+
+.course-card:hover {
+    box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+}
+
+.testimonial-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    border: 1px solid #f3f4f6;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.dark .testimonial-card {
+    background: #151b2b;
+    border-color: #374151;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Footer specific styles */
+footer a:hover {
+    color: #135bec;
+}
+
+footer input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(19, 91, 236, 0.3);
+}
