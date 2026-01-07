@@ -1,0 +1,141 @@
+/* Hero section styles */
+#about-hero {
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-banner {
+    background-image: linear-gradient(rgba(19, 91, 236, 0.85), rgba(16, 22, 34, 0.7)), 
+                      url("https://lh3.googleusercontent.com/aida-public/AB6AXuDCeBqorV1F4DME1x9FTjDrk14iuxQtoyLnu9izuVmZMX7gumoHNd4oxWf3NavpBGgdZ5m_rdmes52jx1SXfflLa61kPCk-avLwPuEVzgBRMacQYX4rtjpuC6tfownp0-5OxRRynOcDNpPBw3Gqd9_o3KphhyF4Cdnml2JFqryhiKwIexrIry2K7Cy0_aBwXUsipFacMh0GzVOQ5Z8OKC0W_JYjgl7mdni604dQ7IpFxnJSuZOY6iyTjcgb_9ijXLQojUcKecaYItQ");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    min-height: 480px;
+    transition: transform 0.5s ease;
+}
+
+.hero-banner:hover {
+    transform: scale(1.01);
+}
+
+.hero-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(19, 91, 236, 0.9) 0%, transparent 50%, rgba(16, 22, 34, 0.8) 100%);
+    z-index: 1;
+}
+
+.hero-banner > div {
+    position: relative;
+    z-index: 2;
+}
+
+/* Hero title animation */
+#about-hero h1 {
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+#about-hero p {
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+}
+
+#about-hero .flex {
+    animation: fadeInUp 0.8s ease-out 0.6s both;
+}
+
+/* Button styles */
+#our-story-btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+#our-story-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+}
+
+#our-story-btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(19, 91, 236, 0.1);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+#our-story-btn:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+#meet-team-btn {
+    border: 2px solid white;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+#meet-team-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.6s;
+}
+
+#meet-team-btn:hover::before {
+    left: 100%;
+}
+
+#meet-team-btn:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-banner {
+        min-height: 400px;
+    }
+    
+    #about-hero h1 {
+        font-size: 2.5rem;
+    }
+    
+    #about-hero p {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .hero-banner {
+        min-height: 350px;
+        padding: 2rem 1rem;
+    }
+    
+    #about-hero h1 {
+        font-size: 2rem;
+    }
+    
+    #about-hero .flex {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    #about-hero button {
+        width: 100%;
+    }
+}

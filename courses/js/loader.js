@@ -6,7 +6,8 @@ class ComponentLoader {
             'hero': 'components/hero.html',
             'filters': 'components/filters.html',
             'course-grid': 'components/course-grid.html',
-            'value-proposition': 'components/value-proposition.html'
+            'value-proposition': 'components/value-proposition.html',
+             'footer': 'components/footer.html'
         };
         
         this.courses = [];
@@ -24,7 +25,8 @@ class ComponentLoader {
                 this.loadComponent('hero', 'components/hero.html'),
                 this.loadComponent('filters', 'components/filters.html'),
                 this.loadComponent('course-grid', 'components/course-grid.html'),
-                this.loadComponent('value-proposition', 'components/value-proposition.html')
+                this.loadComponent('value-proposition', 'components/value-proposition.html'),
+                this.loadComponent('footer', 'components/footer.html')
             ]);
             
             // Load course data

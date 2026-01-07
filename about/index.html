@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>About Us - QEFAS</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Tailwind Config -->
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components/navbar.css">
+    <link rel="stylesheet" href="css/components/hero.css">
+    <link rel="stylesheet" href="css/components/process-steps.css">
+    <link rel="stylesheet" href="css/components/service-card.css">
+    <link rel="stylesheet" href="css/components/testimonial.css">
+    <link rel="stylesheet" href="css/utilities.css">
+    
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#111318] dark:text-white transition-colors duration-200">
+    <div class="relative flex min-h-screen flex-col overflow-x-hidden">
+        <!-- Components will be loaded here -->
+        <div id="navbar-container"></div>
+        <main class="flex-grow">
+            <div id="hero-container"></div>
+            <div id="mission-vision-container"></div>
+            <div id="how-it-works-container"></div>
+            <div id="who-we-serve-container"></div>
+            <div id="testimonials-container"></div>
+            <div id="cta-container"></div>
+        </main>
+        <div id="footer-container"></div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="js/loader.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/components/steps-animation.js" defer></script>
+    <!-- <script src="js/components/testimonial-slider.js" defer></script> -->
+    <script src="js/components/testimonial-slider-fixed.js" defer></script>
+</body>
+</html>
