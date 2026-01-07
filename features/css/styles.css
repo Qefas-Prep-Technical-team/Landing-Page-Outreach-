@@ -65,3 +65,42 @@ html {
     0% { background-position: 200% 0; }
     100% { background-position: -200% 0; }
 }
+
+/* Mobile menu sliding animation */
+#mobile-menu {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateY(-20px);
+    opacity: 0;
+}
+
+#mobile-menu.mobile-menu-open {
+    transform: translateY(0);
+    opacity: 1;
+}
+#mobile-menu a {
+    display: block;
+    margin: 0.5rem 0;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+#mobile-menu.mobile-menu-open a {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Optional: stagger links using delay */
+#mobile-menu.mobile-menu-open a:nth-child(1) { transition-delay: 0.05s; }
+#mobile-menu.mobile-menu-open a:nth-child(2) { transition-delay: 0.1s; }
+#mobile-menu.mobile-menu-open a:nth-child(3) { transition-delay: 0.15s; }
+#mobile-menu.mobile-menu-open a:nth-child(4) { transition-delay: 0.2s; }
+#mobile-menu.mobile-menu-open a:nth-child(5) { transition-delay: 0.25s; }
+
+.mobile-menu-toggle .material-symbols-outlined {
+    transition: transform 0.3s ease;
+}
+
+.mobile-menu-toggle.open .material-symbols-outlined {
+    transform: rotate(90deg);
+}

@@ -1,4 +1,4 @@
-// Component loader using fetch()
+// component-loader.js - Refactored version
 class ComponentLoader {
     constructor() {
         this.components = {
@@ -7,14 +7,18 @@ class ComponentLoader {
             'filters': 'components/filters.html',
             'course-grid': 'components/course-grid.html',
             'value-proposition': 'components/value-proposition.html',
-             'footer': 'components/footer.html'
+            'footer': 'components/footer.html'
         };
         
+        // Course data properties
         this.courses = [];
         this.currentCategory = 'all';
         this.currentPage = 1;
         this.coursesPerPage = 8;
         this.allCourses = [];
+        
+        // Mobile menu instance (will be initialized after navbar loads)
+        this.mobileMenu = null;
     }
 
     async loadAllComponents() {
@@ -28,6 +32,9 @@ class ComponentLoader {
                 this.loadComponent('value-proposition', 'components/value-proposition.html'),
                 this.loadComponent('footer', 'components/footer.html')
             ]);
+            
+            // Initialize mobile menu AFTER navbar is loaded
+            this.initializeMobileMenu();
             
             // Load course data
             await this.loadCourseData();
@@ -58,10 +65,22 @@ class ComponentLoader {
         }
     }
 
+    // Mobile Menu Initialization
+    initializeMobileMenu() {
+        // Wait for DOM to be ready after navbar load
+        setTimeout(() => {
+            try {
+                this.mobileMenu = new MobileMenu();
+                console.log('Mobile menu initialized');
+            } catch (error) {
+                console.error('Failed to initialize mobile menu:', error);
+            }
+        }, 100); // Small delay to ensure navbar HTML is fully rendered
+    }
+
+    // Course Data Functions
     async loadCourseData() {
         try {
-            // In a real app, this would be an API call
-            // For now, we'll use embedded data
             this.allCourses = [
                 {
                     id: 1,
@@ -261,8 +280,8 @@ class ComponentLoader {
         if (!container) return;
         
         const filteredCourses = this.getFilteredCourses();
-        const startIndex = 0; // For now, show all filtered courses
-        const endIndex = filteredCourses.length; // Show all courses
+        const startIndex = 0;
+        const endIndex = filteredCourses.length;
         const coursesToShow = filteredCourses.slice(startIndex, endIndex);
         
         if (!append) {
@@ -387,11 +406,24 @@ class ComponentLoader {
             `;
         }
     }
+
+    // Optional: Public method to get mobile menu instance
+    getMobileMenu() {
+        return this.mobileMenu;
+    }
+
+    // Optional: Public method to toggle mobile menu
+    toggleMobileMenu() {
+        if (this.mobileMenu) {
+            this.mobileMenu.toggle();
+        }
+    }
 }
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     const loader = new ComponentLoader();
     window.courseLoader = loader; // Make accessible for debugging
+    window.componentLoader = loader; // Alternative global reference
     loader.loadAllComponents();
 });

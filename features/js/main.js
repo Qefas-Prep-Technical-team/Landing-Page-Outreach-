@@ -12,9 +12,11 @@ class TrustPageApp {
         this.initializeAnalytics();
     }
 
+    /* ---------------- THEME ---------------- */
+
     bindThemeToggle() {
-        // Check for saved theme preference
         const savedTheme = localStorage.getItem('qefas-theme');
+
         if (savedTheme === 'dark') {
             document.documentElement.classList.add('dark');
         } else if (savedTheme === 'light') {
@@ -23,200 +25,179 @@ class TrustPageApp {
             document.documentElement.classList.add('dark');
         }
 
-        // Create theme toggle button if not exists
         this.createThemeToggle();
     }
 
     createThemeToggle() {
+        if (document.getElementById('theme-toggle')) return;
+
         const themeToggle = document.createElement('button');
-        themeToggle.className = 'fixed bottom-6 right-6 p-3 bg-white dark:bg-surface-dark rounded-full shadow-lg hover:shadow-xl transition-all z-40';
+        themeToggle.id = 'theme-toggle';
+        themeToggle.className =
+            'fixed bottom-6 right-6 p-3 bg-white dark:bg-surface-dark rounded-full shadow-lg hover:shadow-xl transition-all z-40';
+
         themeToggle.innerHTML = `
             <span class="material-symbols-outlined text-slate-700 dark:text-slate-300">
                 dark_mode
             </span>
         `;
-        themeToggle.setAttribute('aria-label', 'Toggle theme');
-        
+
         themeToggle.addEventListener('click', () => {
-            const isDark = document.documentElement.classList.contains('dark');
-            if (isDark) {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('qefas-theme', 'light');
-                themeToggle.innerHTML = `
-                    <span class="material-symbols-outlined text-slate-700">
-                        light_mode
-                    </span>
-                `;
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('qefas-theme', 'dark');
-                themeToggle.innerHTML = `
-                    <span class="material-symbols-outlined text-slate-300">
-                        dark_mode
-                    </span>
-                `;
-            }
-            
-            // Dispatch event for other components
-            document.dispatchEvent(new CustomEvent('themeChanged', {
-                detail: { theme: isDark ? 'light' : 'dark' }
-            }));
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('qefas-theme', isDark ? 'dark' : 'light');
+
+            themeToggle.innerHTML = `
+                <span class="material-symbols-outlined ${
+                    isDark ? 'text-slate-300' : 'text-slate-700'
+                }">
+                    ${isDark ? 'dark_mode' : 'light_mode'}
+                </span>
+            `;
+
+            document.dispatchEvent(
+                new CustomEvent('themeChanged', {
+                    detail: { theme: isDark ? 'dark' : 'light' }
+                })
+            );
         });
-        
+
         document.body.appendChild(themeToggle);
     }
 
+    /* ---------------- SCROLL ---------------- */
+
     bindSmoothScroll() {
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
+        document.addEventListener('click', (e) => {
+            const link = e.target.closest('a[href^="#"]');
+            if (!link) return;
+
+            const targetId = link.getAttribute('href');
+            if (targetId === '#') return;
+
+            const target = document.querySelector(targetId);
+            if (!target) return;
+
+            e.preventDefault();
+            window.scrollTo({
+                top: target.offsetTop - 80,
+                behavior: 'smooth'
             });
         });
     }
 
+    /* ---------------- FEATURES ---------------- */
+
     bindFeatureCardInteractions() {
-        // Feature card hover effects
         document.addEventListener('mouseover', (e) => {
             const card = e.target.closest('.feature-card');
-            if (card) {
-                this.animateFeatureCard(card);
-            }
-        }, true);
-        
-        // Feature card click tracking
+            if (!card) return;
+
+            const icon = card.querySelector('.material-symbols-outlined');
+            if (icon) icon.style.transform = 'scale(1.1)';
+        });
+
+        document.addEventListener('mouseout', (e) => {
+            const card = e.target.closest('.feature-card');
+            if (!card) return;
+
+            const icon = card.querySelector('.material-symbols-outlined');
+            if (icon) icon.style.transform = 'scale(1)';
+        });
+
         document.addEventListener('click', (e) => {
             const card = e.target.closest('.feature-card');
-            if (card) {
-                const title = card.querySelector('h3')?.textContent;
-                this.trackFeatureClick(title);
-            }
+            if (!card) return;
+
+            const title = card.querySelector('h3')?.textContent;
+            this.trackFeatureClick(title);
         });
     }
 
-    animateFeatureCard(card) {
-        // Add visual feedback for hover
-        const icon = card.querySelector('.material-symbols-outlined');
-        if (icon) {
-            icon.style.transition = 'transform 0.3s ease';
-        }
-    }
+    /* ---------------- NAVIGATION ---------------- */
 
     bindNavigation() {
-        // Update active nav link based on scroll position
-        window.addEventListener('scroll', () => {
-            this.updateActiveNavLink();
-        });
-        
-        // Handle navigation clicks
+        window.addEventListener('scroll', () => this.updateActiveNavLink());
+
         document.addEventListener('click', (e) => {
-            if (e.target.closest('nav a')) {
-                this.handleNavClick(e.target.closest('nav a'));
-            }
+            const link = e.target.closest('nav a');
+            if (!link) return;
+
+            const href = link.getAttribute('href');
+            this.trackNavigation(href.startsWith('#') ? 'internal' : 'external', href);
         });
     }
 
     updateActiveNavLink() {
         const sections = document.querySelectorAll('section[id]');
         const navLinks = document.querySelectorAll('nav a');
-        
-        let currentSection = '';
+
+        let current = '';
+
         sections.forEach(section => {
-            const sectionTop = section.offsetTop - 100;
-            const sectionBottom = sectionTop + section.offsetHeight;
-            
-            if (window.scrollY >= sectionTop && window.scrollY < sectionBottom) {
-                currentSection = section.id;
+            const top = section.offsetTop - 120;
+            const bottom = top + section.offsetHeight;
+
+            if (window.scrollY >= top && window.scrollY < bottom) {
+                current = section.id;
             }
         });
-        
+
         navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === `#${currentSection}`) {
-                link.classList.add('active');
-            }
+            link.classList.toggle(
+                'active',
+                link.getAttribute('href') === `#${current}`
+            );
         });
     }
 
-    handleNavClick(link) {
-        const href = link.getAttribute('href');
-        if (href.startsWith('#')) {
-            // Internal link - smooth scroll
-            this.trackNavigation('internal', href);
-        } else {
-            // External link
-            this.trackNavigation('external', href);
-        }
-    }
+    /* ---------------- ANALYTICS ---------------- */
 
     initializeAnalytics() {
-        // Initialize any analytics tracking
         this.trackPageView();
-        
-        // Track scroll depth
         this.trackScrollDepth();
-        
-        // Track time on page
         this.trackTimeOnPage();
     }
 
     trackPageView() {
-        console.log('Page viewed: Trust Page');
-        // In real app: analytics.track('page_viewed', { page: 'trust' });
+        console.log('📄 Page viewed: Trust Page');
     }
 
     trackScrollDepth() {
-        let scrollDepth = 0;
-        
+        let maxDepth = 0;
+
         window.addEventListener('scroll', () => {
-            const scrollPosition = window.scrollY;
-            const pageHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const percentage = Math.round((scrollPosition / pageHeight) * 100);
-            
-            if (percentage > scrollDepth) {
-                scrollDepth = percentage;
-                
-                // Track at 25%, 50%, 75%, 100%
-                if ([25, 50, 75, 100].includes(scrollDepth)) {
-                    console.log(`Scroll depth: ${scrollDepth}%`);
-                    // In real app: analytics.track('scroll_depth', { percentage: scrollDepth });
-                }
+            const docHeight =
+                document.documentElement.scrollHeight - window.innerHeight;
+            const depth = Math.round((window.scrollY / docHeight) * 100);
+
+            if (depth > maxDepth && [25, 50, 75, 100].includes(depth)) {
+                maxDepth = depth;
+                console.log(`📊 Scroll depth: ${depth}%`);
             }
         });
     }
 
     trackTimeOnPage() {
-        const startTime = Date.now();
-        
+        const start = Date.now();
+
         window.addEventListener('beforeunload', () => {
-            const timeSpent = Math.round((Date.now() - startTime) / 1000);
-            console.log(`Time spent on page: ${timeSpent} seconds`);
-            // In real app: analytics.track('time_on_page', { seconds: timeSpent });
+            const seconds = Math.round((Date.now() - start) / 1000);
+            console.log(`⏱ Time on page: ${seconds}s`);
         });
     }
 
-    trackFeatureClick(featureName) {
-        console.log(`Feature clicked: ${featureName}`);
-        // In real app: analytics.track('feature_clicked', { feature: featureName });
+    trackFeatureClick(feature) {
+        if (!feature) return;
+        console.log(`✨ Feature clicked: ${feature}`);
     }
 
     trackNavigation(type, destination) {
-        console.log(`Navigation: ${type} to ${destination}`);
-        // In real app: analytics.track('navigation', { type, destination });
+        console.log(`🔗 Navigation: ${type} → ${destination}`);
     }
 }
 
-// Initialize app
+/* ---------------- INIT ---------------- */
+
 document.addEventListener('DOMContentLoaded', () => {
     window.trustPageApp = new TrustPageApp();
 });

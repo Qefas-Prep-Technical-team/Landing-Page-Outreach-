@@ -95,3 +95,60 @@ footer input:focus {
     outline: none;
     box-shadow: 0 0 0 2px rgba(19, 91, 236, 0.3);
 }
+
+
+.testimonial-card {
+    transition: opacity 0.5s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.testimonial-card.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    position: absolute;
+}
+
+.testimonial-card:not(.hidden) {
+    opacity: 1;
+    transform: translateY(0);
+    position: relative;
+}
+
+/* Mobile menu sliding animation */
+#mobile-menu {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateY(-20px);
+    opacity: 0;
+}
+
+#mobile-menu.mobile-menu-open {
+    transform: translateY(0);
+    opacity: 1;
+}
+#mobile-menu a {
+    display: block;
+    margin: 0.5rem 0;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+#mobile-menu.mobile-menu-open a {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Optional: stagger links using delay */
+#mobile-menu.mobile-menu-open a:nth-child(1) { transition-delay: 0.05s; }
+#mobile-menu.mobile-menu-open a:nth-child(2) { transition-delay: 0.1s; }
+#mobile-menu.mobile-menu-open a:nth-child(3) { transition-delay: 0.15s; }
+#mobile-menu.mobile-menu-open a:nth-child(4) { transition-delay: 0.2s; }
+#mobile-menu.mobile-menu-open a:nth-child(5) { transition-delay: 0.25s; }
+
+.mobile-menu-toggle .material-symbols-outlined {
+    transition: transform 0.3s ease;
+}
+
+.mobile-menu-toggle.open .material-symbols-outlined {
+    transform: rotate(90deg);
+}
