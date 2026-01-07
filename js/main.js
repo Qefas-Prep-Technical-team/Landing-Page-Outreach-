@@ -326,3 +326,38 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+
+// In your main.js, add this function to integrate with other components
+function initializePopupIntegration() {
+    // You can call this from other components to trigger the popup
+    window.showParentPopup = () => {
+        if (window.popupManager) {
+            window.popupManager.openPopup();
+        } else {
+            // Fallback if popup manager isn't loaded yet
+            setTimeout(() => {
+                if (window.popupManager) {
+                    window.popupManager.openPopup();
+                }
+            }, 500);
+        }
+    };
+    
+    // Example: Add popup trigger to navbar CTA
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            const navCTA = document.querySelector('.nav-cta-button');
+            if (navCTA) {
+                navCTA.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.showParentPopup();
+                });
+                navCTA.textContent = 'Parent Inquiry';
+            }
+        }, 1000);
+    });
+}
+
+// Call this function in your main initialization
+initializePopupIntegration();

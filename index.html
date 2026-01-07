@@ -11,6 +11,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Noto+Sans:wght@300..800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
     
+    <!-- Add Popup Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     
@@ -26,10 +29,14 @@
                         "accent": "#0d9488",
                         "background-light": "#f6f6f8",
                         "background-dark": "#101622",
+                        // Add popup orange color
+                        "popup-primary": "#ee6c2b"
                     },
                     fontFamily: {
                         "display": ["Lexend", "sans-serif"],
-                        "body": ["Noto Sans", "sans-serif"]
+                        "body": ["Noto Sans", "sans-serif"],
+                        // Add popup font
+                        "popup": ["Plus Jakarta Sans", "sans-serif"]
                     },
                     borderRadius: { 
                         "DEFAULT": "0.25rem", 
@@ -40,7 +47,9 @@
                     },
                     boxShadow: {
                         "soft": "0 4px 20px -2px rgba(0, 0, 0, 0.05)",
-                        "glow": "0 0 40px -10px rgba(19, 91, 236, 0.3)"
+                        "glow": "0 0 40px -10px rgba(19, 91, 236, 0.3)",
+                        // Add popup shadow
+                        "popup": "0 20px 40px -10px rgba(0, 0, 0, 0.1)"
                     }
                 },
             },
@@ -54,10 +63,12 @@
     <link rel="stylesheet" href="css/components/cards.css">
     <link rel="stylesheet" href="css/components/footer.css">
     <link rel="stylesheet" href="css/utilities.css">
+    <!-- Add Popup CSS -->
+    <link rel="stylesheet" href="css/components/popup.css">
 </head>
 <body class="bg-background-light dark:bg-background-dark text-[#111318] dark:text-white font-display antialiased overflow-x-hidden">
     
-    <!-- Components will be loaded here -->
+    <!-- Main App Container -->
     <div id="app">
         <div id="navbar-container"></div>
         <div id="hero-container"></div>
@@ -69,9 +80,23 @@
         <div id="footer-container"></div>
     </div>
     
+    <!-- Popup Container (will be injected here) -->
+    <div id="popup-container"></div>
+    
+    <!-- Trigger Button (can be placed anywhere) -->
+    <button id="popup-trigger" class="fixed bottom-6 right-6 bg-popup-primary hover:bg-[#d65a1e] text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-popup-primary/30 z-50 transition-all duration-200 hover:scale-105 active:scale-95 hidden">
+        <span class="flex items-center gap-2">
+            <span class="material-symbols-outlined">school</span>
+            Parent Inquiry
+        </span>
+    </button>
+    
     <!-- JavaScript -->
     <script src="js/loader.js"></script>
     <script src="js/main.js"></script>
     <script src="js/components/theme-switcher.js" defer></script>
+    <!-- Add Popup JS -->
+    <script src="js/components/popup.js" defer></script>
+    <script src="js/components/popup-manager.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,84 @@
+<!-- Popup Backdrop -->
+<div id="parentInquiryPopup" class="popup-backdrop">
+    <!-- Popup Container -->
+    <div class="popup-container">
+        <!-- Decorative Header -->
+        <div class="popup-header"></div>
+        
+        <!-- Close Button -->
+        <button class="popup-close" id="popupClose">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        
+        <!-- Popup Content -->
+        <div class="popup-content">
+            <!-- Icon -->
+            <div class="popup-icon">
+                <span class="material-symbols-outlined" style="font-size: 32px; font-variation-settings: 'FILL' 1">school</span>
+            </div>
+            
+            <!-- Text Content -->
+            <div class="popup-text">
+                <h2 class="popup-title">Let's Connect About Your Child.</h2>
+                <p class="popup-description">
+                    We are here to guide their path to success. Fill in your details, and we'll contact you via WhatsApp.
+                </p>
+            </div>
+            
+            <!-- Form -->
+            <form class="popup-form" id="inquiryForm">
+                <!-- Parent Name -->
+                <div class="form-group">
+                    <label for="parentName" class="form-label">Parent Name</label>
+                    <div class="form-input-wrapper">
+                        <input type="text" id="parentName" class="form-input" placeholder="Enter your full name" required>
+                        <span class="material-symbols-outlined form-icon">person</span>
+                    </div>
+                </div>
+                
+                <!-- Child Class -->
+                <div class="form-group">
+                    <label for="childClass" class="form-label">Child's Current Class</label>
+                    <div class="form-input-wrapper">
+                        <select id="childClass" class="form-select" required>
+                            <option value="" disabled selected>Select Class (e.g. JSS, SSS)</option>
+                            <optgroup label="Junior Secondary">
+                                <option value="jss1">JSS 1</option>
+                                <option value="jss2">JSS 2</option>
+                                <option value="jss3">JSS 3</option>
+                            </optgroup>
+                            <optgroup label="Senior Secondary">
+                                <option value="sss1">SSS 1</option>
+                                <option value="sss2">SSS 2</option>
+                                <option value="sss3">SSS 3</option>
+                            </optgroup>
+                        </select>
+                        <span class="material-symbols-outlined form-icon">expand_more</span>
+                    </div>
+                </div>
+                
+                <!-- Phone Number -->
+                <div class="form-group">
+                    <label for="whatsapp" class="form-label">
+                        Phone Number <span style="color: #ee6c2b; font-weight: 400; font-size: 0.75rem; margin-left: 0.25rem;">(WhatsApp)</span>
+                    </label>
+                    <div class="form-input-wrapper">
+                        <span class="phone-prefix">+234</span>
+                        <input type="tel" id="whatsapp" class="form-input phone-input" placeholder="800 000 0000" required>
+                        <span class="material-symbols-outlined form-icon">chat</span>
+                    </div>
+                </div>
+                
+                <!-- Submit Button -->
+                <button type="submit" class="popup-submit">
+                    <span>Send Message</span>
+                    <span class="material-symbols-outlined">send</span>
+                </button>
+                
+                <p class="popup-privacy">
+                    We respect your privacy. No spam, ever.
+                </p>
+            </form>
+        </div>
+    </div>
+</div>

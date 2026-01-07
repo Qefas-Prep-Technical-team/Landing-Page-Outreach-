@@ -1,0 +1,289 @@
+class PopupManager {
+    constructor() {
+        this.popup = null;
+        this.init();
+    }
+
+    async init() {
+        // Load popup HTML
+        await this.loadPopupHTML();
+        
+        // Initialize popup
+        this.initializePopup();
+        
+        // Add trigger button event listener
+        this.addEventListeners();
+        
+        // Auto-show popup after delay (optional)
+        this.setupAutoShow();
+    }
+
+    async loadPopupHTML() {
+        try {
+            // Create popup HTML structure
+            const popupHTML = `
+            <div id="parentInquiryPopup" class="popup-backdrop">
+                <div class="popup-container">
+                    <div class="popup-header"></div>
+                    <button class="popup-close" id="popupClose" aria-label="Close popup">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                    <div class="popup-content">
+                        <div class="popup-icon">
+                            <span class="material-symbols-outlined" style="font-size: 32px; font-variation-settings: 'FILL' 1">school</span>
+                        </div>
+                        <div class="popup-text">
+                            <h2 class="popup-title">Let's Connect About Your Child.</h2>
+                            <p class="popup-description">
+                                We are here to guide their path to success. Fill in your details, and we'll contact you via WhatsApp.
+                            </p>
+                        </div>
+                        <form class="popup-form" id="inquiryForm">
+                            <div class="form-group">
+                                <label for="parentName" class="form-label">Parent Name</label>
+                                <div class="form-input-wrapper">
+                                    <input type="text" id="parentName" class="form-input" placeholder="Enter your full name" required>
+                                    <span class="material-symbols-outlined form-icon">person</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="childClass" class="form-label">Child's Current Class</label>
+                                <div class="form-input-wrapper">
+                                    <select id="childClass" class="form-select" required>
+                                        <option value="" disabled selected>Select Class (e.g. JSS, SSS)</option>
+                                        <optgroup label="Junior Secondary">
+                                            <option value="jss1">JSS 1</option>
+                                            <option value="jss2">JSS 2</option>
+                                            <option value="jss3">JSS 3</option>
+                                        </optgroup>
+                                        <optgroup label="Senior Secondary">
+                                            <option value="sss1">SSS 1</option>
+                                            <option value="sss2">SSS 2</option>
+                                            <option value="sss3">SSS 3</option>
+                                        </optgroup>
+                                    </select>
+                                    <span class="material-symbols-outlined form-icon">expand_more</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="whatsapp" class="form-label">
+                                    Phone Number <span class="popup-phone-note">(WhatsApp)</span>
+                                </label>
+                                <div class="form-input-wrapper">
+                                    <span class="phone-prefix">+234</span>
+                                    <input type="tel" id="whatsapp" class="form-input phone-input" placeholder="800 000 0000" pattern="[0-9]{10}" required>
+                                    <span class="material-symbols-outlined form-icon">chat</span>
+                                </div>
+                            </div>
+                            <button type="submit" class="popup-submit">
+                                <span>Send Message</span>
+                                <span class="material-symbols-outlined">send</span>
+                            </button>
+                            <p class="popup-privacy">
+                                We respect your privacy. No spam, ever.
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            `;
+            
+            // Insert into popup container
+            document.getElementById('popup-container').innerHTML = popupHTML;
+            
+        } catch (error) {
+            console.error('Error loading popup:', error);
+        }
+    }
+
+    initializePopup() {
+        this.popup = document.getElementById('parentInquiryPopup');
+        this.form = document.getElementById('inquiryForm');
+        
+        if (!this.popup) {
+            console.error('Popup element not found');
+            return;
+        }
+    }
+
+    addEventListeners() {
+        // Close button
+        document.getElementById('popupClose')?.addEventListener('click', () => this.closePopup());
+        
+        // Close on backdrop click
+        this.popup?.addEventListener('click', (e) => {
+            if (e.target === this.popup) {
+                this.closePopup();
+            }
+        });
+        
+        // Form submission
+        this.form?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.submitForm();
+        });
+        
+        // Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.isOpen()) {
+                this.closePopup();
+            }
+        });
+        
+        // Trigger button
+        const triggerBtn = document.getElementById('popup-trigger');
+        if (triggerBtn) {
+            triggerBtn.classList.remove('hidden');
+            triggerBtn.addEventListener('click', () => this.openPopup());
+        }
+        
+        // Add CTA button in hero section (optional)
+        this.addHeroCTA();
+    }
+
+    addHeroCTA() {
+        // Wait for hero to load, then add a CTA button
+        setTimeout(() => {
+            const heroSection = document.getElementById('hero-container');
+            if (heroSection) {
+                const ctaButton = document.createElement('button');
+                ctaButton.className = 'bg-popup-primary hover:bg-[#d65a1e] text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-popup-primary/30 transition-all duration-200 hover:scale-105 active:scale-95 mt-6';
+                ctaButton.innerHTML = `
+                    <span class="flex items-center gap-2">
+                        <span class="material-symbols-outlined">school</span>
+                        Inquire for Your Child
+                    </span>
+                `;
+                ctaButton.addEventListener('click', () => this.openPopup());
+                
+                // Find a good place to insert the button
+                const heroContent = heroSection.querySelector('.hero-content') || heroSection;
+                heroContent.appendChild(ctaButton);
+            }
+        }, 1000);
+    }
+
+    setupAutoShow() {
+        // Show popup after 8 seconds
+        setTimeout(() => {
+            if (!localStorage.getItem('popupShown')) {
+                this.openPopup();
+                localStorage.setItem('popupShown', 'true');
+            }
+        }, 8000);
+    }
+
+    openPopup() {
+        if (!this.popup) return;
+        
+        this.popup.classList.add('active');
+        this.popup.querySelector('.popup-container').classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Focus on first input
+        setTimeout(() => {
+            document.getElementById('parentName')?.focus();
+        }, 300);
+    }
+
+    closePopup() {
+        if (!this.popup) return;
+        
+        this.popup.classList.remove('active');
+        this.popup.querySelector('.popup-container').classList.remove('active');
+        document.body.style.overflow = '';
+        
+        // Reset form
+        this.form?.reset();
+    }
+
+    isOpen() {
+        return this.popup?.classList.contains('active');
+    }
+
+    submitForm() {
+        const formData = {
+            parentName: document.getElementById('parentName').value.trim(),
+            childClass: document.getElementById('childClass').value,
+            whatsapp: document.getElementById('whatsapp').value.trim()
+        };
+
+        // Validate
+        if (!this.validateForm(formData)) {
+            return;
+        }
+
+        // Prepare WhatsApp message
+        const classMap = {
+            'jss1': 'JSS 1', 'jss2': 'JSS 2', 'jss3': 'JSS 3',
+            'sss1': 'SSS 1', 'sss2': 'SSS 2', 'sss3': 'SSS 3'
+        };
+        
+        const className = classMap[formData.childClass] || formData.childClass;
+        const message = `Hello! I'm ${formData.parentName}. I'm interested in learning more about your services for my child in ${className}. Please contact me at +234${formData.whatsapp}.`;
+        
+        // Open WhatsApp
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappURL = `https://wa.me/2348000000000?text=${encodedMessage}`;
+        
+        window.open(whatsappURL, '_blank');
+        
+        // Close popup
+        this.closePopup();
+        
+        // Show success notification
+        this.showNotification('Success! You will be redirected to WhatsApp.');
+    }
+
+    validateForm(data) {
+        const errors = [];
+        
+        if (!data.parentName) {
+            errors.push('Please enter your name');
+            document.getElementById('parentName').focus();
+        }
+        
+        if (!data.childClass) {
+            errors.push('Please select your child\'s class');
+            document.getElementById('childClass').focus();
+        }
+        
+        const phoneRegex = /^[0-9]{10}$/;
+        if (!phoneRegex.test(data.whatsapp)) {
+            errors.push('Please enter a valid 10-digit phone number');
+            document.getElementById('whatsapp').focus();
+        }
+        
+        if (errors.length > 0) {
+            alert(errors.join('\n'));
+            return false;
+        }
+        
+        return true;
+    }
+
+    showNotification(message) {
+        // Create a simple notification
+        const notification = document.createElement('div');
+        notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-[10000] animate-fade-in';
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    window.popupManager = new PopupManager();
+});
+
+// Global function to open popup (can be called from anywhere)
+window.showParentInquiryPopup = function() {
+    if (window.popupManager) {
+        window.popupManager.openPopup();
+    }
+};
