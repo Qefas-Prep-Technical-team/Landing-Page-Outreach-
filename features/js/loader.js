@@ -27,11 +27,16 @@ class TrustPageLoader {
         ];
 
         this.loaded = false;
+        this.isMobileMenuOpen = false;
+        this.mobileMenuToggle = null;
+        this.mobileMenu = null;
     }
 
     // Load all components
     async loadAllComponents() {
         try {
+            console.log('Loading components...');
+            
             // Load static components
             const promises = Object.entries(this.components).map(([id, path]) => this.loadComponent(id, path));
             await Promise.all(promises);
@@ -39,20 +44,42 @@ class TrustPageLoader {
             // Load dynamic content
             this.renderFeatures();
             this.renderDashboardFeatures();
-                // Initialize mobile menu AFTER navbar is loaded
-            this.initializeMobileMenu();
+
+            // Initialize mobile navigation
+            this.initializeMobileNav();
 
             // Initialize interactions
             this.initializeInteractions();
             this.initializeStatsCounter();
-            this.initializeScrollAnimations();
 
-            console.log('Trust page components loaded successfully');
+            console.log('All components loaded successfully');
             this.loaded = true;
+            
+            // Ensure all sections are visible
+            this.ensureSectionsVisible();
+            
         } catch (err) {
             console.error('Error loading components:', err);
             this.showError();
         }
+    }
+
+    // Ensure all sections are visible
+    ensureSectionsVisible() {
+        // Force all sections to be visible
+        const sections = document.querySelectorAll('section');
+        sections.forEach(section => {
+            section.style.opacity = '1';
+            section.style.visibility = 'visible';
+            section.style.display = 'block';
+        });
+        
+        // Also ensure process steps are visible
+        const processSteps = document.querySelectorAll('.process-step');
+        processSteps.forEach(step => {
+            step.style.opacity = '1';
+            step.style.transform = 'none';
+        });
     }
 
     // Fetch and insert component
@@ -64,103 +91,255 @@ class TrustPageLoader {
             const container = document.getElementById(`${id}-container`);
             if (container) {
                 container.innerHTML = html;
-                container.classList.add('loaded', 'fade-in');
+                // Don't add fade-in class to avoid animation issues
+                container.classList.add('loaded');
             }
         } catch (err) {
             console.error(`Error loading ${id}:`, err);
             this.showComponentError(id);
         }
     }
-   // Mobile Menu Initialization
-    initializeMobileMenu() {
-        // Wait for DOM to be ready after navbar load
-        setTimeout(() => {
-            try {
-                if (typeof MobileMenu === 'function') {
-                    this.mobileMenu = new MobileMenu();
-                    console.log('Mobile menu initialized (MobileMenu class)');
-                    return;
+
+    // Initialize mobile navigation
+    initializeMobileNav() {
+        console.log('Initializing mobile navigation...');
+        
+        // Try to find elements
+        this.findMobileElements();
+        
+        if (!this.mobileMenuToggle || !this.mobileMenu) {
+            console.log('Mobile nav elements not found, retrying...');
+            setTimeout(() => {
+                this.findMobileElements();
+                if (this.mobileMenuToggle && this.mobileMenu) {
+                    this.setupMobileNav();
+                } else {
+                    console.log('Creating fallback mobile nav');
+                    this.createFallbackMobileNav();
                 }
-
-                // Fallback initializer if MobileMenu class is not present
-                const navbarContainer = document.getElementById('navbar-container');
-                if (!navbarContainer) {
-                    console.warn('Navbar container missing; cannot initialize fallback mobile menu');
-                    return;
-                }
-
-                const toggle = navbarContainer.querySelector('#mobile-menu-toggle');
-                const menu = navbarContainer.querySelector('#mobile-menu');
-                if (!toggle || !menu) {
-                    console.warn('Mobile menu elements not found for fallback initialization');
-                    return;
-                }
-
-                // Ensure hidden by default
-                menu.classList.add('hidden');
-
-                const openMenu = () => {
-                    menu.classList.remove('hidden');
-                    // small delay to allow CSS transitions
-                    setTimeout(() => menu.classList.add('mobile-menu-open'), 10);
-                    const icon = toggle.querySelector('.material-symbols-outlined');
-                    if (icon) icon.textContent = 'close';
-                    document.body.style.overflow = 'hidden';
-                };
-
-                const closeMenu = () => {
-                    menu.classList.remove('mobile-menu-open');
-                    const icon = toggle.querySelector('.material-symbols-outlined');
-                    if (icon) icon.textContent = 'menu';
-                    document.body.style.overflow = '';
-                    setTimeout(() => menu.classList.add('hidden'), 300);
-                };
-
-                let isOpen = false;
-                toggle.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    isOpen = !isOpen;
-                    isOpen ? openMenu() : closeMenu();
-                });
-
-                // Close when clicking links inside menu
-                menu.querySelectorAll('a, button').forEach(el => el.addEventListener('click', () => {
-                    isOpen = false; closeMenu();
-                }));
-
-                // Close on outside click
-                document.addEventListener('click', (e) => {
-                    if (!isOpen) return;
-                    if (!menu.contains(e.target) && !toggle.contains(e.target)) {
-                        isOpen = false; closeMenu();
-                    }
-                });
-
-                // Close on escape key
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && isOpen) {
-                        isOpen = false; closeMenu();
-                    }
-                });
-
-                console.log('Mobile menu initialized (fallback)');
-            } catch (error) {
-                console.error('Failed to initialize mobile menu (fallback):', error);
-            }
-        }, 100); // Small delay to ensure navbar HTML is fully rendered
+            }, 300);
+        } else {
+            this.setupMobileNav();
+        }
     }
+
+    findMobileElements() {
+        // Look for mobile elements
+        this.mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        this.mobileMenu = document.getElementById('mobile-menu');
+        
+        // Alternative selectors if not found by ID
+        if (!this.mobileMenuToggle) {
+            this.mobileMenuToggle = document.querySelector('[data-mobile-toggle]') || 
+                                   document.querySelector('button.md\\:hidden');
+        }
+        
+        if (!this.mobileMenu) {
+            this.mobileMenu = document.querySelector('[data-mobile-menu]') || 
+                             document.querySelector('.mobile-menu');
+        }
+    }
+
+    setupMobileNav() {
+        if (!this.mobileMenuToggle || !this.mobileMenu) {
+            console.error('Cannot setup mobile nav: elements missing');
+            return;
+        }
+        
+        console.log('Setting up mobile navigation...');
+        
+        // Clear any existing event listeners
+        const newToggle = this.mobileMenuToggle.cloneNode(true);
+        this.mobileMenuToggle.parentNode.replaceChild(newToggle, this.mobileMenuToggle);
+        this.mobileMenuToggle = newToggle;
+        
+        // Add click event
+        this.mobileMenuToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            this.toggleMobileMenu();
+        });
+        
+        // Setup close handlers
+        this.setupCloseHandlers();
+        
+        console.log('Mobile navigation setup complete');
+    }
+
+    setupCloseHandlers() {
+        // Close when clicking outside
+        document.addEventListener('click', (e) => {
+            if (this.isMobileMenuOpen && 
+                this.mobileMenu && 
+                !this.mobileMenu.contains(e.target) && 
+                this.mobileMenuToggle && 
+                !this.mobileMenuToggle.contains(e.target)) {
+                this.closeMobileMenu();
+            }
+        });
+        
+        // Close on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && this.isMobileMenuOpen) {
+                this.closeMobileMenu();
+            }
+        });
+        
+        // Close when clicking mobile menu links
+        if (this.mobileMenu) {
+            const links = this.mobileMenu.querySelectorAll('a, button:not(#mobile-menu-toggle)');
+            links.forEach(link => {
+                link.addEventListener('click', () => {
+                    this.closeMobileMenu();
+                });
+            });
+        }
+    }
+
+    toggleMobileMenu() {
+        if (!this.mobileMenu || !this.mobileMenuToggle) {
+            console.error('Mobile nav elements not available');
+            return;
+        }
+        
+        if (this.isMobileMenuOpen) {
+            this.closeMobileMenu();
+        } else {
+            this.openMobileMenu();
+        }
+    }
+
+    openMobileMenu() {
+        // Remove hidden class
+        this.mobileMenu.classList.remove('hidden');
+        
+        // Force reflow
+        this.mobileMenu.offsetHeight;
+        
+        // Add open class
+        setTimeout(() => {
+            this.mobileMenu.classList.add('mobile-menu-open');
+        }, 10);
+        
+        // Update toggle button icon
+        const icon = this.mobileMenuToggle.querySelector('.material-symbols-outlined');
+        if (icon) {
+            icon.textContent = 'close';
+        }
+        
+        // Update state
+        this.isMobileMenuOpen = true;
+        
+        // Prevent body scroll
+        document.body.classList.add('menu-open');
+    }
+
+    closeMobileMenu() {
+        // Remove open class
+        this.mobileMenu.classList.remove('mobile-menu-open');
+        
+        // Update toggle button icon
+        const icon = this.mobileMenuToggle.querySelector('.material-symbols-outlined');
+        if (icon) {
+            icon.textContent = 'menu';
+        }
+        
+        // Update state
+        this.isMobileMenuOpen = false;
+        
+        // Allow body scroll
+        document.body.classList.remove('menu-open');
+        
+        // Hide menu after animation
+        setTimeout(() => {
+            if (!this.isMobileMenuOpen && this.mobileMenu) {
+                this.mobileMenu.classList.add('hidden');
+            }
+        }, 400);
+    }
+
+    createFallbackMobileNav() {
+        console.log('Creating fallback mobile navigation...');
+        
+        const navbarContainer = document.getElementById('navbar-container');
+        if (!navbarContainer) {
+            console.error('Cannot create fallback: navbar container not found');
+            return;
+        }
+        
+        // Find the nav element
+        const navElement = navbarContainer.querySelector('nav');
+        if (!navElement) {
+            console.error('Cannot create fallback: nav element not found');
+            return;
+        }
+        
+        // Create toggle button
+        const toggle = document.createElement('button');
+        toggle.id = 'mobile-menu-toggle';
+        toggle.className = 'md:hidden flex items-center justify-center h-10 w-10 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300';
+        toggle.innerHTML = '<span class="material-symbols-outlined text-xl">menu</span>';
+        
+        // Find the actions container to insert toggle
+        const actionsContainer = navElement.querySelector('.flex.items-center.gap-3');
+        if (actionsContainer) {
+            actionsContainer.appendChild(toggle);
+        }
+        
+        // Create mobile menu
+        const mobileMenu = document.createElement('div');
+        mobileMenu.id = 'mobile-menu';
+        mobileMenu.className = 'md:hidden hidden absolute left-0 right-0 top-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 shadow-lg';
+        mobileMenu.innerHTML = `
+            <div class="px-4 py-3 space-y-1">
+                <a class="block py-3 px-4 text-gray-700 dark:text-gray-200 text-sm font-medium hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg" href="/courses/">
+                    Courses
+                </a>
+                <a class="block py-3 px-4 text-gray-700 dark:text-gray-200 text-sm font-medium hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg" href="/features/">
+                    Features
+                </a>
+                <a class="block py-3 px-4 text-gray-700 dark:text-gray-200 text-sm font-medium hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg" href="/about/">
+                    About
+                </a>
+                
+                <div class="pt-3 mt-3 border-t border-gray-200 dark:border-gray-800 space-y-2">
+                    <button class="w-full flex items-center justify-center h-10 px-4 text-sm font-bold text-gray-700 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg">
+                        Student Login
+                    </button>
+                    <button class="w-full flex items-center justify-center h-10 px-4 bg-primary hover:bg-primary-dark text-white text-sm font-bold rounded-lg">
+                        Start Learning
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        // Insert after the nav content
+        const navContent = navElement.querySelector('div > div');
+        if (navContent) {
+            navContent.insertAdjacentElement('afterend', mobileMenu);
+        }
+        
+        // Update references and setup
+        this.mobileMenuToggle = toggle;
+        this.mobileMenu = mobileMenu;
+        
+        // Setup the navigation
+        this.setupMobileNav();
+    }
+
     // Render features grid
     renderFeatures() {
         const container = document.getElementById('features-container');
         if (!container) return;
-        container.innerHTML = this.featuresData.map(f => `
-            <div class="feature-card group relative flex flex-col gap-4 rounded-xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-surface-dark p-8 shadow-soft hover:shadow-hover hover:-translate-y-1 transition-all duration-300 fade-in">
-                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 ${f.color} group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-                    <span class="material-symbols-outlined">${f.icon}</span>
+        
+        container.innerHTML = this.featuresData.map(feature => `
+            <div class="feature-card group relative flex flex-col gap-4 rounded-xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-8 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300">
+                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                    <span class="material-symbols-outlined">${feature.icon}</span>
                 </div>
                 <div>
-                    <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-2">${f.title}</h3>
-                    <p class="text-sm leading-relaxed text-slate-600 dark:text-slate-400">${f.description}</p>
+                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">${feature.title}</h3>
+                    <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-400">${feature.description}</p>
                 </div>
             </div>
         `).join('');
@@ -170,14 +349,15 @@ class TrustPageLoader {
     renderDashboardFeatures() {
         const container = document.getElementById('dashboard-features');
         if (!container) return;
-        container.innerHTML = this.dashboardFeatures.map(f => `
-            <li class="flex items-start gap-3 dashboard-feature-item">
-                <span class="mt-1 flex-shrink-0 text-accent">
+        
+        container.innerHTML = this.dashboardFeatures.map(feature => `
+            <li class="flex items-start gap-3">
+                <span class="mt-1 flex-shrink-0 text-green-500">
                     <span class="material-symbols-outlined">check_circle</span>
                 </span>
                 <div>
-                    <h4 class="font-bold text-slate-900 dark:text-white">${f.title}</h4>
-                    <p class="text-sm text-slate-600 dark:text-slate-400">${f.description}</p>
+                    <h4 class="font-bold text-gray-900 dark:text-white">${feature.title}</h4>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">${feature.description}</p>
                 </div>
             </li>
         `).join('');
@@ -185,23 +365,25 @@ class TrustPageLoader {
 
     // Initialize all buttons/interactions
     initializeInteractions() {
-        const btns = [
-            { id: 'get-started-btn', event: 'get_started_clicked', action: () => window.location.href = '/signup' },
-            { id: 'login-btn', event: 'login_clicked', action: () => window.location.href = '/login' },
-            { id: 'view-demo-btn', event: 'view_demo_clicked', action: () => this.showDemoModal() },
-            { id: 'create-account-btn', event: 'create_account_clicked', action: () => window.location.href = '/signup?source=trust_page' },
-            { id: 'how-it-works-btn', event: 'how_it_works_clicked', action: () => window.location.href = '/features#how-it-works' }
+        const buttons = [
+            { id: 'get-started-btn', action: () => window.location.href = '/signup' },
+            { id: 'login-btn', action: () => window.location.href = '/login' },
+            { id: 'view-demo-btn', action: () => this.showDemoModal() },
+            { id: 'create-account-btn', action: () => window.location.href = '/signup?source=trust_page' },
+            { id: 'how-it-works-btn', action: () => window.location.href = '/features#how-it-works' }
         ];
 
-        btns.forEach(({ id, event, action }) => {
-            const el = document.getElementById(id);
-            if (el) el.addEventListener('click', () => { this.trackEvent(event); action(); });
+        buttons.forEach(({ id, action }) => {
+            const element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('click', action);
+            }
         });
     }
 
     // Animate stats counters
     initializeStatsCounter() {
-        const items = document.querySelectorAll('.stat-item');
+        const statItems = document.querySelectorAll('.stat-item');
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -210,48 +392,42 @@ class TrustPageLoader {
                 }
             });
         }, { threshold: 0.5 });
-        items.forEach(item => observer.observe(item));
+        
+        statItems.forEach(item => observer.observe(item));
     }
 
     animateCounter(statItem) {
-        const el = statItem.querySelector('[data-count]');
-        if (!el) return;
-        const target = parseInt(el.dataset.count);
-        const suffix = el.dataset.suffix || '';
+        const counterElement = statItem.querySelector('[data-count]');
+        if (!counterElement) return;
+        
+        const target = parseInt(counterElement.dataset.count);
+        const suffix = counterElement.dataset.suffix || '';
         let current = 0;
+        const duration = 2000;
         const steps = 60;
         const increment = target / steps;
-        let step = 0;
-        const duration = 2000;
-
-        el.textContent = '0' + suffix;
+        
         const timer = setInterval(() => {
-            step++;
-            current = Math.min(target, Math.floor(increment * step));
-            el.textContent = current + suffix;
-            if (current >= target) clearInterval(timer);
+            current = Math.min(target, Math.floor(current + increment));
+            counterElement.textContent = current + suffix;
+            
+            if (current >= target) {
+                clearInterval(timer);
+            }
         }, duration / steps);
-        statItem.classList.add('count-up');
-    }
-
-    // Scroll animations
-    initializeScrollAnimations() {
-        const sections = document.querySelectorAll('section');
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-        sections.forEach(sec => observer.observe(sec));
+        
+        statItem.classList.add('counting');
     }
 
     // Demo modal
     showDemoModal() {
         const modalHTML = `
             <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                <div class="bg-white dark:bg-surface-dark rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
+                <div class="bg-white dark:bg-gray-900 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
                     <div class="p-6">
                         <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-xl font-bold text-slate-900 dark:text-white">Parent Dashboard Demo</h3>
-                            <button class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300" id="close-demo-modal">
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Parent Dashboard Demo</h3>
+                            <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 close-demo-modal">
                                 <span class="material-symbols-outlined">close</span>
                             </button>
                         </div>
@@ -268,60 +444,55 @@ class TrustPageLoader {
                 </div>
             </div>
         `;
-        const modal = document.createElement('div');
-        modal.innerHTML = modalHTML;
-        document.body.appendChild(modal);
-
-        // Close modal
-        const closeBtn = modal.querySelector('#close-demo-modal');
-        if (closeBtn) closeBtn.addEventListener('click', () => document.body.removeChild(modal));
-        modal.addEventListener('click', e => { if (e.target === modal) document.body.removeChild(modal); });
+        
+        const modalContainer = document.createElement('div');
+        modalContainer.innerHTML = modalHTML;
+        document.body.appendChild(modalContainer);
+        
+        // Close modal handlers
+        const closeModal = () => document.body.removeChild(modalContainer);
+        
+        const closeBtn = modalContainer.querySelector('.close-demo-modal');
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        
+        modalContainer.addEventListener('click', (e) => {
+            if (e.target === modalContainer) closeModal();
+        });
     }
 
-    // Analytics tracker stub
-    trackEvent(eventName, data = {}) {
-        console.log(`Event: ${eventName}`, data);
-    }
-
+    // Error handling
     showComponentError(componentId) {
         const container = document.getElementById(`${componentId}-container`);
-        if (container) container.innerHTML = `
-            <div class="p-8 text-center text-gray-500">
-                <span class="material-symbols-outlined text-4xl mb-4">error</span>
-                <p>Unable to load ${componentId}. Please refresh the page.</p>
-            </div>
-        `;
+        if (container) {
+            container.innerHTML = `
+                <div class="p-8 text-center text-gray-500">
+                    <span class="material-symbols-outlined text-4xl mb-4">error</span>
+                    <p>Unable to load ${componentId}. Please refresh the page.</p>
+                </div>
+            `;
+        }
     }
 
     showError() {
-        const main = document.querySelector('main');
-        if (main) main.innerHTML = `
-            <div class="min-h-screen flex items-center justify-center">
-                <div class="text-center">
-                    <span class="material-symbols-outlined text-6xl text-red-400 mb-4">error</span>
-                    <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Unable to Load Page</h2>
-                    <p class="text-slate-600 dark:text-slate-400 mb-6">There was an error loading the page content.</p>
-                    <button class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors" onclick="location.reload()">Reload Page</button>
+        const mainElement = document.querySelector('main');
+        if (mainElement) {
+            mainElement.innerHTML = `
+                <div class="min-h-screen flex items-center justify-center">
+                    <div class="text-center">
+                        <span class="material-symbols-outlined text-6xl text-red-400 mb-4">error</span>
+                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Unable to Load Page</h2>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6">There was an error loading the page content.</p>
+                        <button class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors" onclick="location.reload()">Reload Page</button>
+                    </div>
                 </div>
-            </div>
-        `;
-    }
-     // Optional: Public method to get mobile menu instance
-    getMobileMenu() {
-        return this.mobileMenu;
-    }
-
-    // Optional: Public method to toggle mobile menu
-    toggleMobileMenu() {
-        if (this.mobileMenu) {
-            this.mobileMenu.toggle();
+            `;
         }
     }
 }
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    const loader = new TrustPageLoader();
-    window.trustPageLoader = loader; // For debugging
-    loader.loadAllComponents();
+    const pageLoader = new TrustPageLoader();
+    window.pageLoader = pageLoader; // For debugging if needed
+    pageLoader.loadAllComponents();
 });

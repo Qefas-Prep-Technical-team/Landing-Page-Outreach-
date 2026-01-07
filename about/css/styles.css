@@ -1,5 +1,27 @@
-/* Base styles and animations */
-@keyframes fadeInUp {
+/* Force all sections to show */
+section {
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+    transform: none !important;
+    animation: none !important;
+}
+
+/* Specifically target problematic sections */
+#how-it-works-section,
+#who-we-serve-section {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* Fix any child elements */
+#how-it-works-section *,
+#who-we-serve-section * {
+    opacity: 1 !important;
+    visibility: visible !important;
+    animation: none !important;
+}
+/* @keyframes fadeInUp {
     from {
         opacity: 0;
         transform: translateY(20px);
@@ -8,7 +30,7 @@
         opacity: 1;
         transform: translateY(0);
     }
-}
+} */
 
 @keyframes scaleIn {
     from {
