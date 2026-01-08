@@ -366,11 +366,11 @@ class TrustPageLoader {
     // Initialize all buttons/interactions
     initializeInteractions() {
         const buttons = [
-            { id: 'get-started-btn', action: () => window.location.href = '/signup' },
-            { id: 'login-btn', action: () => window.location.href = '/login' },
-            { id: 'view-demo-btn', action: () => this.showDemoModal() },
-            { id: 'create-account-btn', action: () => window.location.href = '/signup?source=trust_page' },
-            { id: 'how-it-works-btn', action: () => window.location.href = '/features#how-it-works' }
+            // { id: 'get-started-btn', action: () => window.location.href = '/signup' },
+            // { id: 'login-btn', action: () => window.location.href = '/login' },
+            // { id: 'view-demo-btn', action: () => this.showDemoModal() },
+            // { id: 'create-account-btn', action: () => window.location.href = '/signup?source=trust_page' },
+            // { id: 'how-it-works-btn', action: () => window.location.href = '/features#how-it-works' }
         ];
 
         buttons.forEach(({ id, action }) => {
@@ -420,45 +420,45 @@ class TrustPageLoader {
     }
 
     // Demo modal
-    showDemoModal() {
-        const modalHTML = `
-            <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                <div class="bg-white dark:bg-gray-900 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
-                    <div class="p-6">
-                        <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-xl font-bold text-gray-900 dark:text-white">Parent Dashboard Demo</h3>
-                            <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 close-demo-modal">
-                                <span class="material-symbols-outlined">close</span>
-                            </button>
-                        </div>
-                        <div class="aspect-video bg-gray-100 dark:bg-gray-800 rounded-lg mb-6 flex items-center justify-center">
-                            <div class="text-center">
-                                <span class="material-symbols-outlined text-6xl text-gray-400 mb-4">play_circle</span>
-                                <p class="text-gray-500">Demo video would play here</p>
-                            </div>
-                        </div>
-                        <div class="flex justify-end">
-                            <button class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">Start Free Trial</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
+    // showDemoModal() {
+    //     const modalHTML = `
+    //         <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    //             <div class="bg-white dark:bg-gray-900 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
+    //                 <div class="p-6">
+    //                     <div class="flex justify-between items-center mb-6">
+    //                         <h3 class="text-xl font-bold text-gray-900 dark:text-white">Parent Dashboard Demo</h3>
+    //                         <button class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 close-demo-modal">
+    //                             <span class="material-symbols-outlined">close</span>
+    //                         </button>
+    //                     </div>
+    //                     <div class="aspect-video bg-gray-100 dark:bg-gray-800 rounded-lg mb-6 flex items-center justify-center">
+    //                         <div class="text-center">
+    //                             <span class="material-symbols-outlined text-6xl text-gray-400 mb-4">play_circle</span>
+    //                             <p class="text-gray-500">Demo video would play here</p>
+    //                         </div>
+    //                     </div>
+    //                     <div class="flex justify-end">
+    //                         <button class="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary-dark transition-colors">Start Free Trial</button>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     `;
         
-        const modalContainer = document.createElement('div');
-        modalContainer.innerHTML = modalHTML;
-        document.body.appendChild(modalContainer);
+    //     const modalContainer = document.createElement('div');
+    //     modalContainer.innerHTML = modalHTML;
+    //     document.body.appendChild(modalContainer);
         
-        // Close modal handlers
-        const closeModal = () => document.body.removeChild(modalContainer);
+    //     // Close modal handlers
+    //     const closeModal = () => document.body.removeChild(modalContainer);
         
-        const closeBtn = modalContainer.querySelector('.close-demo-modal');
-        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    //     const closeBtn = modalContainer.querySelector('.close-demo-modal');
+    //     if (closeBtn) closeBtn.addEventListener('click', closeModal);
         
-        modalContainer.addEventListener('click', (e) => {
-            if (e.target === modalContainer) closeModal();
-        });
-    }
+    //     modalContainer.addEventListener('click', (e) => {
+    //         if (e.target === modalContainer) closeModal();
+    //     });
+    // }
 
     // Error handling
     showComponentError(componentId) {

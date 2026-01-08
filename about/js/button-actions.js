@@ -58,3 +58,50 @@ Please share full details.`;
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
 });
+
+
+document.addEventListener('DOMContentLoaded', async () => {
+    const pageLoader = new AboutUsLoader();
+    await pageLoader.loadAllComponents();
+
+    const phone = '2347063484232';
+
+    const viewDemoBtn = document.getElementById('view-demo-btn');
+    if (viewDemoBtn) {
+        viewDemoBtn.addEventListener('click', () => {
+            const message = `Hello QEFAS 👋
+I’d like to view the parent demo to understand how your classes work.
+Please share the details.`;
+
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+        });
+    }
+
+    const createAccountBtn = document.getElementById('create-account-btn');
+    if (createAccountBtn) {
+        createAccountBtn.addEventListener('click', () => {
+            const message = `Hello QEFAS 👋
+I want to create a student account for my child.
+Please guide me through registration.`;
+
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+        });
+    }
+
+    const howItWorksBtn = document.getElementById('how-it-works-btn');
+    if (howItWorksBtn) {
+        howItWorksBtn.addEventListener('click', () => {
+            const message = `Hello QEFAS 👋
+I want to understand how QEFAS classes work.
+Please explain the learning process.`;
+
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+        });
+    }
+
+    // Repeat similar logic for [data-start-learning], [data-free-trial], [data-course-whatsapp] buttons if needed
+});
+
+
+
+

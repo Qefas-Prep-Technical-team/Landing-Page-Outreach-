@@ -1,55 +1,89 @@
-<section class="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-surface-dark border-y border-gray-100 dark:border-gray-800" id="dashboard-section">
-    <div class="mx-auto max-w-7xl">
-        <div class="flex flex-col lg:flex-row gap-12 items-center">
-            <!-- Left: Image/Dashboard -->
-            <div class="w-full lg:w-1/2">
-                <div class="relative rounded-2xl bg-gray-100 dark:bg-gray-800 p-2 shadow-xl ring-1 ring-gray-900/10">
-                    <div class="absolute -top-4 -left-4 z-10 hidden md:flex h-16 w-16 items-center justify-center rounded-xl bg-accent shadow-lg text-white animate-bounce" style="animation-duration: 3s;">
-                        <span class="material-symbols-outlined" style="font-size: 32px;">check_circle</span>
-                    </div>
+<section
+  class="py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-surface-dark border-y border-gray-100 dark:border-gray-800"
+  id="dashboard-section"
+>
+  <div class="mx-auto max-w-7xl">
+    <div class="flex flex-col lg:flex-row gap-12 items-center">
+      <!-- Left: Image/Dashboard -->
+      <div class="w-full lg:w-1/2">
+        <div
+          class="relative rounded-2xl bg-gray-100 dark:bg-gray-800 p-2 shadow-xl ring-1 ring-gray-900/10"
+        >
+          <div
+            class="absolute -top-4 -left-4 z-10 hidden md:flex h-16 w-16 items-center justify-center rounded-xl bg-accent shadow-lg text-white animate-bounce"
+            style="animation-duration: 3s"
+          >
+            <span class="material-symbols-outlined" style="font-size: 32px"
+              >check_circle</span
+            >
+          </div>
+          <div
+            class="overflow-hidden rounded-xl h-full min-h-[300px] md:min-h-[400px] bg-cover bg-center"
+            style="
+              background-image: url('../../images/digital-tablet-screen-smart-tech.jpg');
+            "
+          >
+            <!-- Overlay for better text contrast if needed, or just visual polish -->
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-8"
+            >
+              <div
+                class="bg-white/95 dark:bg-surface-dark/95 backdrop-blur rounded-lg p-4 shadow-lg w-full max-w-xs dashboard-widget"
+              >
+                <div class="flex items-center gap-3 mb-2">
+                  <div class="h-2 w-2 rounded-full bg-green-500"></div>
+                  <span
+                    class="text-xs font-bold uppercase tracking-wider text-slate-500"
+                    >Weekly Progress</span
+                  >
+                </div>
+                <div class="flex justify-between items-end">
+                  <div>
                     <div
-                    
-                       class="overflow-hidden rounded-xl h-full min-h-[300px] md:min-h-[400px] bg-cover bg-center"
-  style="background-image: url('../../images/digital-tablet-screen-smart-tech.jpg');"
-
-                     >
-                        <!-- Overlay for better text contrast if needed, or just visual polish -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent flex items-end p-8">
-                            <div class="bg-white/95 dark:bg-surface-dark/95 backdrop-blur rounded-lg p-4 shadow-lg w-full max-w-xs dashboard-widget">
-                                <div class="flex items-center gap-3 mb-2">
-                                    <div class="h-2 w-2 rounded-full bg-green-500"></div>
-                                    <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Weekly Progress</span>
-                                </div>
-                                <div class="flex justify-between items-end">
-                                    <div>
-                                        <div class="text-2xl font-bold text-slate-900 dark:text-white">92%</div>
-                                        <div class="text-xs text-slate-500">Math & English Average</div>
-                                    </div>
-                                    <span class="material-symbols-outlined text-green-500">show_chart</span>
-                                </div>
-                            </div>
-                        </div>
+                      class="text-2xl font-bold text-slate-900 dark:text-white"
+                    >
+                      92%
                     </div>
+                    <div class="text-xs text-slate-500">
+                      Math & English Average
+                    </div>
+                  </div>
+                  <span class="material-symbols-outlined text-green-500"
+                    >show_chart</span
+                  >
                 </div>
+              </div>
             </div>
-            
-            <!-- Right: Content -->
-            <div class="w-full lg:w-1/2 flex flex-col gap-6">
-                <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white leading-tight">
-                    Monitor Growth in <span class="text-primary">Real-Time</span>
-                </h2>
-                <p class="text-lg text-slate-600 dark:text-slate-300">
-                    Don't guess how your child is doing. Our dashboard provides instant feedback on quizzes, personalized study plans, and detailed breakdowns of topic mastery.
-                </p>
-                <ul class="flex flex-col gap-4 mt-2" id="dashboard-features">
-                    <!-- Features will be loaded dynamically -->
-                </ul>
-                <div class="pt-4">
-                    <button class="inline-flex items-center gap-2 text-primary font-bold hover:text-primary-dark transition-colors" id="view-demo-btn">
-                        View Parent Demo <span class="material-symbols-outlined text-sm">arrow_forward</span>
-                    </button>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
+
+      <!-- Right: Content -->
+      <div class="w-full lg:w-1/2 flex flex-col gap-6">
+        <h2
+          class="text-3xl font-extrabold text-slate-900 dark:text-white leading-tight"
+        >
+          Monitor Growth in <span class="text-primary">Real-Time</span>
+        </h2>
+        <p class="text-lg text-slate-600 dark:text-slate-300">
+          Don't guess how your child is doing. Our dashboard provides instant
+          feedback on quizzes, personalized study plans, and detailed breakdowns
+          of topic mastery.
+        </p>
+        <ul class="flex flex-col gap-4 mt-2" id="dashboard-features">
+          <!-- Features will be loaded dynamically -->
+        </ul>
+        <div class="pt-4">
+          <button
+            id="view-demo-btn"
+            class="inline-flex items-center gap-2 text-primary font-bold hover:text-primary-dark transition-colors"
+            type="button"
+          >
+            View Parent Demo
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </button>
+        </div>
+      </div>
     </div>
+  </div>
 </section>

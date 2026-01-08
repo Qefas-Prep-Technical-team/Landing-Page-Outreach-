@@ -386,10 +386,24 @@ class ComponentLoader {
         return card;
     }
 
-    viewCourseDetails(course) {
-        alert(`Viewing details for: ${course.title}\nCategory: ${course.category}\nPrice: ₦${course.price}`);
-        // In a real app, this would navigate to course detail page or show modal
-    }
+  viewCourseDetails(course) {
+    const phone = '2347063484232'; // QEFAS WhatsApp number
+
+    const message = `
+Hello QEFAS 👋
+I’m a parent interested in the *${course.title}*.
+
+Class Level: ${course.level}
+Category: ${course.badge}
+Price: ₦${course.price.toLocaleString()}
+
+Please share full details and enrollment steps.
+    `.trim();
+
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    window.open(url, '_blank');
+}
+
 
     updateCourseCount(count) {
         // Update any course count display if needed
