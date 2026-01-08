@@ -3,8 +3,8 @@
         <!-- Primary Category Chips -->
         <div class="flex gap-3 overflow-x-auto hide-scrollbar pb-1 w-full" id="category-filters">
             <button class="category-filter active flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary pl-4 pr-4 transition-all shadow-sm" data-category="all">
-                <span class="material-symbols-outlined text-white text-[18px]">check</span>
-                <p class="text-white text-sm font-medium leading-normal">All</p>
+                <span class="material-symbols-outlined text-black text-[18px]">check</span>
+                <p class="text-black text-sm font-medium leading-normal">All</p>
             </button>
             <button class="category-filter flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-[#f0f2f4] hover:bg-[#e2e4e8] pl-4 pr-4 transition-colors" data-category="junior-secondary">
                 <p class="text-[#111318] text-sm font-medium leading-normal">Junior Secondary</p>
@@ -22,16 +22,12 @@
         
         <!-- Secondary Filters -->
         <div class="flex gap-3 overflow-x-auto hide-scrollbar pt-1 w-full border-t border-dashed border-[#f0f2f4] mt-1 pt-3">
-            <button class="group flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg border border-[#e5e7eb] bg-white hover:border-primary pl-3 pr-2 transition-colors" id="level-filter">
+            <!-- <button type="button" class="group flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg border border-[#e5e7eb] bg-white hover:border-primary pl-3 pr-2 transition-colors" id="level-filter">
                 <p class="text-[#616f89] group-hover:text-primary text-xs font-medium uppercase tracking-wide">Level</p>
                 <span class="material-symbols-outlined text-[#616f89] group-hover:text-primary text-[20px]">keyboard_arrow_down</span>
-            </button>
-            <button class="group flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg border border-[#e5e7eb] bg-white hover:border-primary pl-3 pr-2 transition-colors" id="subject-filter">
-                <p class="text-[#616f89] group-hover:text-primary text-xs font-medium uppercase tracking-wide">Subject</p>
-                <span class="material-symbols-outlined text-[#616f89] group-hover:text-primary text-[20px]">keyboard_arrow_down</span>
-            </button>
+            </button> -->
             <div class="flex-1"></div>
-            <button class="group flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg border-none bg-transparent hover:bg-[#f0f2f4] pl-3 pr-2 transition-colors" id="sort-filter">
+            <button type="button" class="group flex h-8 shrink-0 items-center justify-center gap-x-2 rounded-lg border-none bg-transparent hover:bg-[#f0f2f4] pl-3 pr-2 transition-colors" id="sort-filter">
                 <p class="text-[#111318] text-xs font-medium">Sort by: <span class="font-bold" id="sort-text">Popular</span></p>
                 <span class="material-symbols-outlined text-[#111318] text-[20px]">sort</span>
             </button>
