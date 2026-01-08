@@ -239,8 +239,8 @@ class CourseCatalogApp {
             'all': 'All',
             'junior-secondary': 'Junior Secondary',
             'senior-secondary': 'Senior Secondary',
-            'entrance-exams': 'Entrance Exams',
-            'international': 'International'
+            'UTME': 'Utme',
+            'GCE': 'Gce'
         };
         return names[category] || category;
     }
