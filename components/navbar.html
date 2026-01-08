@@ -19,15 +19,11 @@
             <!-- Actions -->
             <div class="flex items-center gap-3">
                 <!-- HIDDEN: Start Learning Button (removed from main view) -->
-                <button class="hidden md:flex items-center justify-center h-9 px-4 bg-primary hover:bg-primary-dark text-white text-sm font-bold rounded-lg shadow-sm shadow-primary/30 transition-all">
-                    Start Learning
-                </button>
+               <button id="start-learning" type="button" class="hidden md:flex items-center justify-center h-9 px-4 bg-primary hover:bg-primary-dark text-white text-sm font-bold rounded-lg shadow-sm shadow-primary/30 transition-all" data-start-learning>
+                   Start Learning
+               </button>
                 
-                <!-- Student Login Button -->
-                <!-- <button class="hidden sm:flex items-center justify-center h-9 px-4 text-sm font-bold text-[#111318] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
-                    Student Login
-                </button> -->
-                
+           
                 <!-- Mobile Menu Button -->
                 <button class="md:hidden flex items-center justify-center h-10 w-10 rounded-lg bg-[#f0f2f4] dark:bg-gray-800 text-[#111318] dark:text-gray-300" id="mobile-menu-toggle">
                     <span class="material-symbols-outlined text-xl">menu</span>
@@ -50,12 +46,8 @@
                 
                 <!-- Mobile Action Buttons -->
                 <div class="pt-3 mt-3 border-t border-[#f0f2f4] dark:border-gray-800 space-y-2">
-                    <!-- <button class="w-full flex items-center justify-center h-10 px-4 text-sm font-bold text-[#111318] dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
-                        Student Login
-                    </button> -->
-                    <button class="w-full flex items-center justify-center h-10 px-4 bg-primary hover:bg-primary-dark text-white text-sm font-bold rounded-lg shadow-sm shadow-primary/30 transition-all">
-                        Start Learning
-                    </button>
+                  
+                    <button id="start-learning-mobile" type="button" class="w-full hidden md:block mt-2 px-4 py-2 bg-primary text-white rounded-lg" data-start-learning>Start Learning</button>
                 </div>
             </div>
         </div>
