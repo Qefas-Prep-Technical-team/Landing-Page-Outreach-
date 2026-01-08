@@ -10,11 +10,10 @@ class PopupManager {
         
         // Initialize popup
         this.initializePopup();
-        
-        // Add trigger button event listener
+        // Add trigger button & form event listeners
         this.addEventListeners();
-        
-        // Auto-show popup after delay (optional)
+
+        // Schedule auto-show (single, consolidated)
         this.setupAutoShow();
     }
 
@@ -42,7 +41,7 @@ class PopupManager {
                             <div class="form-group">
                                 <label for="parentName" class="form-label">Parent Name</label>
                                 <div class="form-input-wrapper">
-                                    <input type="text" id="parentName" class="form-input" placeholder="Enter your full name" required>
+                                    <input type="text" id="parentName" class="form-input " placeholder="Enter your full name" required>
                                     <span class="material-symbols-outlined form-icon">person</span>
                                 </div>
                             </div>
@@ -71,7 +70,7 @@ class PopupManager {
                                 </label>
                                 <div class="form-input-wrapper">
                                     <span class="phone-prefix">+234</span>
-                                    <input type="tel" id="whatsapp" class="form-input phone-input" placeholder="800 000 0000" pattern="[0-9]{10}" required>
+                                    <input type="tel" id="whatsapp" class="form-input phone-input pl-20" placeholder="800 000 0000" pattern="[0-9]{10}" required>
                                     <span class="material-symbols-outlined form-icon">chat</span>
                                 </div>
                             </div>
@@ -106,6 +105,51 @@ class PopupManager {
         }
     }
 
+    // Consolidated auto-show behavior. Respects localStorage and allows
+    // forcing via `?showPopup=1` query param for testing.
+    setupAutoShow(options = {}) {
+        const delay = options.delay ?? 3000;
+        const localStorageKey = options.localStorageKey ?? 'popup_autoshown_v1';
+        const showOnce = options.showOnce ?? true;
+
+        // allow forcing via URL param for testing
+        const params = new URLSearchParams(window.location.search);
+        const forceShow = params.get('showPopup') === '1';
+
+        setTimeout(() => {
+            try {
+                if (showOnce && !forceShow && localStorage.getItem(localStorageKey)) {
+                    console.log('[popup-manager] auto-show skipped (already shown)');
+                    return;
+                }
+
+                if (!this.popup) {
+                    console.warn('[popup-manager] popup element not ready');
+                    return;
+                }
+
+                this.openPopup();
+
+                if (showOnce) localStorage.setItem(localStorageKey, '1');
+
+                // Auto-close after 8 seconds if user hasn't interacted
+                const autoCloseTimer = setTimeout(() => {
+                    if (this.isOpen() && !document.activeElement.closest('#inquiryForm')) {
+                        this.closePopup();
+                    }
+                }, 8000);
+
+                // Cancel auto-close if user interacts with the form
+                this.form?.addEventListener('focusin', () => {
+                    clearTimeout(autoCloseTimer);
+                }, { once: true });
+            } catch (err) {
+                console.error('[popup-manager] setupAutoShow error', err);
+            }
+        }, delay);
+    }
+
+
     addEventListeners() {
         // Close button
         document.getElementById('popupClose')?.addEventListener('click', () => this.closePopup());
@@ -138,40 +182,32 @@ class PopupManager {
         }
         
         // Add CTA button in hero section (optional)
-        this.addHeroCTA();
+        // this.addHeroCTA();
     }
 
-    addHeroCTA() {
-        // Wait for hero to load, then add a CTA button
-        setTimeout(() => {
-            const heroSection = document.getElementById('hero-container');
-            if (heroSection) {
-                const ctaButton = document.createElement('button');
-                ctaButton.className = 'bg-popup-primary hover:bg-[#d65a1e] text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-popup-primary/30 transition-all duration-200 hover:scale-105 active:scale-95 mt-6';
-                ctaButton.innerHTML = `
-                    <span class="flex items-center gap-2">
-                        <span class="material-symbols-outlined">school</span>
-                        Inquire for Your Child
-                    </span>
-                `;
-                ctaButton.addEventListener('click', () => this.openPopup());
+    // addHeroCTA() {
+    //     // Wait for hero to load, then add a CTA button
+    //     setTimeout(() => {
+    //         const heroSection = document.getElementById('hero-container');
+    //         if (heroSection) {
+    //             const ctaButton = document.createElement('button');
+    //             ctaButton.className = 'bg-popup-primary hover:bg-primary  text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-popup-primary/30 transition-all duration-200 hover:scale-105 active:scale-95 mt-6';
+    //             ctaButton.innerHTML = `
+    //                 <span class="flex items-center gap-2">
+    //                     <span class="material-symbols-outlined">school</span>
+    //                     Inquire for Your Child
+    //                 </span>
+    //             `;
+    //             ctaButton.addEventListener('click', () => this.openPopup());
                 
-                // Find a good place to insert the button
-                const heroContent = heroSection.querySelector('.hero-content') || heroSection;
-                heroContent.appendChild(ctaButton);
-            }
-        }, 1000);
-    }
+    //             // Find a good place to insert the button
+    //             const heroContent = heroSection.querySelector('.hero-content') || heroSection;
+    //             heroContent.appendChild(ctaButton);
+    //         }
+    //     }, 1000);
+    // }
 
-    setupAutoShow() {
-        // Show popup after 8 seconds
-        setTimeout(() => {
-            if (!localStorage.getItem('popupShown')) {
-                this.openPopup();
-                localStorage.setItem('popupShown', 'true');
-            }
-        }, 8000);
-    }
+    
 
     openPopup() {
         if (!this.popup) return;

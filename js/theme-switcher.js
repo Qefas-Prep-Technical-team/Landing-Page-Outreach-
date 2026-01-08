@@ -13,16 +13,16 @@ class ThemeSwitcher {
 
     createThemeToggle() {
         // Create theme toggle button
-        const toggleHTML = `
-            <button id="theme-toggle" class="fixed bottom-4 right-4 p-3 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl transition-all z-50">
-                <span class="material-symbols-outlined text-gray-800 dark:text-white">
-                    dark_mode
-                </span>
-            </button>
-        `;
+        // const toggleHTML = `
+        //     <button id="theme-toggle" class="fixed bottom-4 right-4 p-3 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl transition-all z-50">
+        //         <span class="material-symbols-outlined text-gray-800 dark:text-white">
+        //             dark_mode
+        //         </span>
+        //     </button>
+        // `;
         
-        document.body.insertAdjacentHTML('beforeend', toggleHTML);
-        this.themeToggle = document.getElementById('theme-toggle');
+        // document.body.insertAdjacentHTML('beforeend', toggleHTML);
+        // this.themeToggle = document.getElementById('theme-toggle');
     }
 
     bindEvents() {
