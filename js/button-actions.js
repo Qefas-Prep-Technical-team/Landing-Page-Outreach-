@@ -46,14 +46,14 @@ document.addEventListener('click', (e) => {
 
     const phone = '2347063484232';
 
-    const message =
-`Hello QEFAS 👋
-I’m a parent interested in this course:
+    const message = `Hello QEFAS 👋 
 
-📘 ${courseName}
-Class: JSS / SSS
+I'd like to get more information about:
+📚 *Course:* ${courseName}
+⏳ *Duration:* 12 Weeks (Recorded)
+💰 *Price:* ₦1,500
 
-Please share full details.`;
+Please share the full details on how to get started.`;
 
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');

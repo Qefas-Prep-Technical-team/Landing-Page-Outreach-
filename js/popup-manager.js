@@ -237,39 +237,50 @@ class PopupManager {
         return this.popup?.classList.contains('active');
     }
 
-    submitForm() {
-        const formData = {
-            parentName: document.getElementById('parentName').value.trim(),
-            childClass: document.getElementById('childClass').value,
-            whatsapp: document.getElementById('whatsapp').value.trim()
-        };
+async submitForm() {
+    const submitBtn = this.form.querySelector('.popup-submit');
+    const originalBtnText = submitBtn.innerHTML;
 
-        // Validate
-        if (!this.validateForm(formData)) {
-            return;
+    const formData = {
+        parentName: document.getElementById('parentName').value.trim(),
+        childClass: document.getElementById('childClass').value,
+        whatsapp: document.getElementById('whatsapp').value.trim(),
+    };
+
+    if (!this.validateForm(formData)) return;
+
+    try {
+        // Disable button to prevent double-submission
+        submitBtn.disabled = true;
+        submitBtn.innerText = 'Sending...';
+
+        const res = await fetch('https://selfpaced-tracker.vercel.app/api/inquiries', {
+            method: 'POST',
+            mode: 'cors', // Explicitly set cors mode
+            headers: { 
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify(formData),
+        });
+
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+            this.showNotification('Success! Inquiry saved.');
+            this.closePopup();
+        } else {
+            // Handle specific status codes (like 409 Conflict)
+            this.showNotification(`Error: ${data.error || 'Failed to save'}`);
         }
-
-        // Prepare WhatsApp message
-        const classMap = {
-            'jss1': 'JSS 1', 'jss2': 'JSS 2', 'jss3': 'JSS 3',
-            'sss1': 'SSS 1', 'sss2': 'SSS 2', 'sss3': 'SSS 3'
-        };
-        
-        const className = classMap[formData.childClass] || formData.childClass;
-        const message = `Hello! I'm ${formData.parentName}. I'm interested in learning more about your services for my child in ${className}. Please contact me at +234${formData.whatsapp}.`;
-        
-        // Open WhatsApp
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappURL = `https://wa.me/2348000000000?text=${encodedMessage}`;
-        
-        window.open(whatsappURL, '_blank');
-        
-        // Close popup
-        this.closePopup();
-        
-        // Show success notification
-        this.showNotification('Success! You will be redirected to WhatsApp.');
+    } catch (err) {
+        console.error('Fetch error:', err);
+        this.showNotification('Connection error. Please check your internet.');
+    } finally {
+        // Re-enable button
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalBtnText;
     }
+}
 
     validateForm(data) {
         const errors = [];
@@ -296,7 +307,9 @@ class PopupManager {
         }
         
         return true;
+
     }
+
 
     showNotification(message) {
         // Create a simple notification
@@ -323,3 +336,5 @@ window.showParentInquiryPopup = function() {
         window.popupManager.openPopup();
     }
 };
+
+
