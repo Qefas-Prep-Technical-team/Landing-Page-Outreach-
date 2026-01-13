@@ -7,6 +7,8 @@ class PopupManager {
     async init() {
         // Load popup HTML
         await this.loadPopupHTML();
+        // Fetch and populate channels
+    await this.loadChannels();
         
         // Initialize popup
         this.initializePopup();
@@ -16,6 +18,24 @@ class PopupManager {
         // Schedule auto-show (single, consolidated)
         this.setupAutoShow();
     }
+
+    async loadChannels() {
+    try {
+        const res = await fetch('https://selfpaced-tracker.vercel.app/api/channels/source');
+        console.log(res)
+        const result = await res.json();
+        
+        if (result.success) {
+            const select = document.getElementById('referralChannel');
+            result.data.forEach(channel => {
+                const option = document.createElement('option');
+                option.value = channel._id; // Store ID as the value
+                option.textContent = channel.name; // User sees the Name
+                select.appendChild(option);
+            });
+        }
+    } catch (err) { console.error(err); }
+}
 
     async loadPopupHTML() {
         try {
@@ -73,6 +93,15 @@ class PopupManager {
                                     <input type="tel" id="whatsapp" class="form-input phone-input pl-20" placeholder="800 000 0000" pattern="[0-9]{10}" required>
                                     <span class="material-symbols-outlined form-icon">chat</span>
                                 </div>
+                                <div class="form-group">
+    <label for="referralChannel" class="form-label">How did you hear about us?</label>
+    <div class="form-input-wrapper">
+        <select id="referralChannel" class="form-select" required>
+            <option value="" disabled selected>Select an option</option>
+            </select>
+        <span class="material-symbols-outlined form-icon">campaign</span>
+    </div>
+</div>
                             </div>
                             <button type="submit" class="popup-submit">
                                 <span>Send Message</span>
@@ -185,27 +214,6 @@ class PopupManager {
         // this.addHeroCTA();
     }
 
-    // addHeroCTA() {
-    //     // Wait for hero to load, then add a CTA button
-    //     setTimeout(() => {
-    //         const heroSection = document.getElementById('hero-container');
-    //         if (heroSection) {
-    //             const ctaButton = document.createElement('button');
-    //             ctaButton.className = 'bg-popup-primary hover:bg-primary  text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-popup-primary/30 transition-all duration-200 hover:scale-105 active:scale-95 mt-6';
-    //             ctaButton.innerHTML = `
-    //                 <span class="flex items-center gap-2">
-    //                     <span class="material-symbols-outlined">school</span>
-    //                     Inquire for Your Child
-    //                 </span>
-    //             `;
-    //             ctaButton.addEventListener('click', () => this.openPopup());
-                
-    //             // Find a good place to insert the button
-    //             const heroContent = heroSection.querySelector('.hero-content') || heroSection;
-    //             heroContent.appendChild(ctaButton);
-    //         }
-    //     }, 1000);
-    // }
 
     
 
@@ -240,12 +248,16 @@ class PopupManager {
 async submitForm() {
     const submitBtn = this.form.querySelector('.popup-submit');
     const originalBtnText = submitBtn.innerHTML;
+// Inside submitForm()
+const formData = {
+    parentName: document.getElementById('parentName').value.trim(),
+    childClass: document.getElementById('childClass').value,
+    whatsapp: document.getElementById('whatsapp').value.trim(),
+    channelId: channelSelect.value,        // Grabs the _id from <option value="...">
+    channelName: selectedOption.textContent // Grabs the "Facebook" text
+};
 
-    const formData = {
-        parentName: document.getElementById('parentName').value.trim(),
-        childClass: document.getElementById('childClass').value,
-        whatsapp: document.getElementById('whatsapp').value.trim(),
-    };
+
 
     if (!this.validateForm(formData)) return;
 
@@ -300,6 +312,11 @@ async submitForm() {
             errors.push('Please enter a valid 10-digit phone number');
             document.getElementById('whatsapp').focus();
         }
+        // Inside validateForm(data)
+if (!data.source) {
+    errors.push('Please tell us how you heard about us');
+    document.getElementById('referralChannel').focus();
+}
         
         if (errors.length > 0) {
             alert(errors.join('\n'));
