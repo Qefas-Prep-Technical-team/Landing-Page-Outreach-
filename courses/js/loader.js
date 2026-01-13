@@ -92,12 +92,13 @@ class ComponentLoader {
                     reviewCount: 120,
                     lessons: 24,
                     duration: "24hrs + 12 Weeks",
-                    price: 1500,
+                    price: 2000,
                     originalPrice: 5000,
                     image: "../../images/Self-paced-SSS1-Course (1).webp",
                     badge: "Senior Secondary",
                     badgeColor: "text-purple-600",
-                    description: "This course contains SSS1 courses such as Mathematics, English, Chemistry, etc."
+                    description: "This course contains SSS1 courses such as Mathematics, English, Chemistry, etc.",
+                    courseLink: "https://qefas.com/product/sss1-course-self-paced-class/" // Add this unique link for each course
                 },
                 {
                     id: 2,
@@ -109,12 +110,13 @@ class ComponentLoader {
                     reviewCount: 342,
                     lessons: 40,
                     duration: "24hrs + 12 Weeks",
-                    price: 1500,
+                    price: 2000,
                     originalPrice: 5000,
                     image: "../../images/sss2.webp",
                     badge: "Senior Secondary",
                     badgeColor: "text-purple-600",
-                    description: "This course contains SSS2 courses such as Mathematics, English, Chemistry, etc."
+                    description: "This course contains SSS2 courses such as Mathematics, English, Chemistry, etc.",
+                     courseLink: "https://qefas.com/product/sss2-course-self-paced-class/" // Add this unique link for each course
                 },
                 {
                     id: 3,
@@ -126,15 +128,70 @@ class ComponentLoader {
                     reviewCount: 85,
                     lessons: 18,
                     duration: "24hrs + 12 Weeks",
-                    price: 1500,
+                    price: 2000,
                     originalPrice: 5000,
                     image: "../../images/sss3.webp",
                     badge: "Senior Secondary",
                     badgeColor: "text-purple-600",
-                    description: "This course contains SSS3 courses such as Mathematics, English, Chemistry, etc."
+                    description: "This course contains SSS3 courses such as Mathematics, English, Chemistry, etc.",
+                     courseLink: "https://qefas.com/product/sss3-course-self-paced-class/" // Add this unique link for each course
                 },
                 {
                     id: 4,
+                    title: "JSS1 Course (self-paced class)",
+                    category: "junior-secondary",
+                    level: "JSS 1",
+                    subject: "mathematics, english, basic science,and basic technology",
+                    rating: 4.7,
+                    reviewCount: 85,
+                    lessons: 18,
+                    duration: "24hrs + 12 Weeks",
+                    price: 2000,
+                    originalPrice: 5000,
+                    image: "../../images/jss1.png",
+                    badge: "Junior Secondary",
+                    badgeColor: "text-orange-600",
+                    description: "Take control of your learning with this self-paced course! Master the core subjects of Mathematics, English, Basic Science, and Basic Technology through easy-to-follow lessons. Learn at your own speed, build your confidence, and get the grades you’ve always wanted!",
+                     courseLink: "https://qefas.com/product/jss1-course-self-paced-class/" // Add this unique link for each course
+                },
+                {
+                    id: 5,
+                    title: "JSS2 Course (self-paced class)",
+                    category: "junior-secondary",
+                    level: "JSS 2",
+                    subject: "mathematics, english, basic science,and basic technology",
+                    rating: 4.7,
+                    reviewCount: 85,
+                    lessons: 18,
+                    duration: "24hrs + 12 Weeks",
+                    price: 2000,
+                    originalPrice: 5000,
+                    image: "../../images/jss2.png",
+                    badge: "Junior Secondary",
+                    badgeColor: "text-orange-600",
+                    description: "Take control of your learning with this self-paced course! Master the core subjects of Mathematics, English, Basic Science, and Basic Technology through easy-to-follow lessons. Learn at your own speed, build your confidence, and get the grades you’ve always wanted!",
+                     courseLink: "https://qefas.com/product/jss2-course-self-paced-class/" // Add this unique link for each course
+                },
+                {
+                    id: 6,
+                    title: "JSS3 Course (self-paced class)",
+                    category: "junior-secondary",
+                    level: "JSS 3",
+                    subject: "mathematics, english, basic science,and basic technology",
+                    rating: 4.7,
+                    reviewCount: 85,
+                    lessons: 18,
+                    duration: "24hrs + 12 Weeks",
+                    price: 2000,
+                    originalPrice: 5000,
+                    image: "../../images/jss3.png",
+                    badge: "Junior Secondary",
+                    badgeColor: "text-orange-600",
+                    description: "Take control of your learning with this self-paced course! Master the core subjects of Mathematics, English, Basic Science, and Basic Technology through easy-to-follow lessons. Learn at your own speed, build your confidence, and get the grades you’ve always wanted!",
+                     courseLink: "https://qefas.com/product/jss3-course-self-paced-class/" // Add this unique link for each course
+                },
+                {
+                    id: 7,
                     title: "GCE Science (self-paced class)",
                     category: "gce",
                     level: "Gce",
@@ -147,11 +204,12 @@ class ComponentLoader {
                     originalPrice: 10000,
                     image: "../../images/gce-engineering-self-paced.webp",
                     badge: "Gce",
-                    badgeColor: "text-orange-600",
-                    description: "Boost your GCE Commercial exam readiness with our dynamic live-online classes, designed for your convenience and flexibility. Our comprehensive curriculum covers vital subjects like English, Mathematics, Physics, Chemistry, Biology and Economics, all accessible from the comfort of your home. Tailor your learning experience to fit your schedule by engaging with the material at your own pace. This blend of interactive education and personalization ensures you can effectively prepare for your exams, no matter where you are or what time suits you best."
+                    badgeColor: "text-pink-600",
+                    description: "Boost your GCE Commercial exam readiness with our dynamic live-online classes, designed for your convenience and flexibility. Our comprehensive curriculum covers vital subjects like English, Mathematics, Physics, Chemistry, Biology and Economics, all accessible from the comfort of your home. Tailor your learning experience to fit your schedule by engaging with the material at your own pace. This blend of interactive education and personalization ensures you can effectively prepare for your exams, no matter where you are or what time suits you best.",
+                     courseLink: " https://qefas.com/product/gce-science-self-paced-class/" // Add this unique link for each course
                 },
                 {
-                    id: 5,
+                    id: 8,
                     title: "GCE Arts (self-paced class)",
                     category: "gce",
                     level: "Gce",
@@ -164,11 +222,12 @@ class ComponentLoader {
                     originalPrice: null,
                     image: "../../images/gce-arts-self-paced.webp",
                     badge: "GCE",
-                    badgeColor: "text-cyan-600",
-                    description: "Optimize your GCE Arts exam preparation with our self-paced class, covering key subjects like English, Literature, Economics, and CRS. This flexible learning approach allows you to study at your own pace, fitting seamlessly into your schedule. While this course operates without direct instructor supervision, it is meticulously designed to ensure comprehensive coverage and understanding of each subject, empowering you to excel in your GCE exams"
+                    badgeColor: "text-pink-600",
+                    description: "Optimize your GCE Arts exam preparation with our self-paced class, covering key subjects like English, Literature, Economics, and CRS. This flexible learning approach allows you to study at your own pace, fitting seamlessly into your schedule. While this course operates without direct instructor supervision, it is meticulously designed to ensure comprehensive coverage and understanding of each subject, empowering you to excel in your GCE exams",
+                     courseLink: "https://qefas.com/product/gce-arts-self-paced-class/" // Add this unique link for each course
                 },
                 {
-                    id: 6,
+                    id: 9,
                     title: "GCE Commercial (self-paced)",
                     category: "gce",
                     level: "Gce",
@@ -181,11 +240,12 @@ class ComponentLoader {
                     originalPrice: 10000,
                     image: "../../images/utme-commercial-self-paced.webp",
                     badge: "GCE",
-                    badgeColor: "text-rose-600",
-                    description: "Boost your GCE Commercial exam readiness with our dynamic live-online classes, designed for your convenience and flexibility. Our comprehensive curriculum covers vital subjects like English, Mathematics, Economics, and Commerce, all accessible from the comfort of your home. Tailor your learning experience to fit your schedule by engaging with the material at your own pace. This blend of interactive education and personalization ensures you can effectively prepare for your exams, no matter where you are or what time suits you best."
+                    badgeColor: "text-pink-600",
+                    description: "Boost your GCE Commercial exam readiness with our dynamic live-online classes, designed for your convenience and flexibility. Our comprehensive curriculum covers vital subjects like English, Mathematics, Economics, and Commerce, all accessible from the comfort of your home. Tailor your learning experience to fit your schedule by engaging with the material at your own pace. This blend of interactive education and personalization ensures you can effectively prepare for your exams, no matter where you are or what time suits you best.",
+                     courseLink: "https://qefas.com/product/gce-commercial-selfpaced/" // Add this unique link for each course
                 },
                 {
-                    id: 7,
+                    id: 10,
                     title: "UTME Engineering (self-paced)",
                     category: "utme",
                     level: "utme",
@@ -199,10 +259,11 @@ class ComponentLoader {
                     image: "../../images/utme-engineering-self-paced.webp",
                     badge: "UTME",
                     badgeColor: "text-violet-600",
-                    description: "Boost your UTME Engineering exam readiness with our dynamic live-online classes, designed for your convenience and flexibility. Our comprehensive curriculum covers vital subjects like English, Mathematics, Physics, and Chemistry, all accessible from the comfort of your home. Tailor your learning experience to fit your schedule by engaging with the material at your own pace. This blend of interactive education and personalization ensures you can effectively prepare for your exams, no matter where you are or what time suits you best."
+                    description: "Boost your UTME Engineering exam readiness with our dynamic live-online classes, designed for your convenience and flexibility. Our comprehensive curriculum covers vital subjects like English, Mathematics, Physics, and Chemistry, all accessible from the comfort of your home. Tailor your learning experience to fit your schedule by engaging with the material at your own pace. This blend of interactive education and personalization ensures you can effectively prepare for your exams, no matter where you are or what time suits you best.",
+                     courseLink: "https://qefas.com/product/utme-engineering-self-paced/" // Add this unique link for each course
                 },
                 {
-                    id: 8,
+                    id: 11,
                     title: "UTME Art (self-paced)",
                     category: "utme",
                     level: "utme",
@@ -216,10 +277,11 @@ class ComponentLoader {
                     image: "../../images/utme-arts-self-paced.webp",
                     badge: "UTME",
                     badgeColor: "text-violet-600",
-                    description: "Boost your UTME Arts exam readiness with our dynamic self-paced classes, designed for your convenience and flexibility. Our comprehensive curriculum covers vital subjects like English, Literature, CRK, and Government, all accessible from the comfort of your home. Tailor your learning experience to fit your schedule by engaging with the material at your own pace. This blend of interactive education and personalization ensures you can effectively prepare for your exams, no matter where you are or what time suits you best."
+                    description: "Boost your UTME Arts exam readiness with our dynamic self-paced classes, designed for your convenience and flexibility. Our comprehensive curriculum covers vital subjects like English, Literature, CRK, and Government, all accessible from the comfort of your home. Tailor your learning experience to fit your schedule by engaging with the material at your own pace. This blend of interactive education and personalization ensures you can effectively prepare for your exams, no matter where you are or what time suits you best.",
+                     courseLink: "https://qefas.com/product/utme-art-self-paced/" // Add this unique link for each course
                 },
                 {
-                    id: 9,
+                    id: 12,
                     title: "UTME Medical (self-paced class)",
                     category: "utme",
                     level: "utme",
@@ -233,7 +295,8 @@ class ComponentLoader {
                     image: "../../images/utme-medical-science-self-paced.webp",
                     badge: "UTME",
                     badgeColor: "text-violet-600",
-                    description: "Boost your UTME Medical Science exam readiness with our dynamic self-paced classes, designed for your convenience and flexibility. Our comprehensive curriculum covers vital subjects like English, Physics, Chemistry, and Biology all accessible from the comfort of your home. Tailor your learning experience to fit your schedule by engaging with the material at your own pace. This blend of interactive education and personalization ensures you can effectively prepare for your exams, no matter where you are or what time suits you best."
+                    description: "Boost your UTME Medical Science exam readiness with our dynamic self-paced classes, designed for your convenience and flexibility. Our comprehensive curriculum covers vital subjects like English, Physics, Chemistry, and Biology all accessible from the comfort of your home. Tailor your learning experience to fit your schedule by engaging with the material at your own pace. This blend of interactive education and personalization ensures you can effectively prepare for your exams, no matter where you are or what time suits you best.",
+                     courseLink: "https://qefas.com/product/utme-medical-self-paced/" // Add this unique link for each course
                 },
             ];
             
@@ -270,7 +333,7 @@ class ComponentLoader {
                 this.renderCourses();
                 
                 // Show category in console for debugging
-                console.log(`Filtered by category: ${this.currentCategory}`);
+                // console.log(`Filtered by category: ${this.currentCategory}`);
             });
         });
         
@@ -369,7 +432,7 @@ class ComponentLoader {
                         <span class="text-lg font-bold text-[#111318]">₦${course.price.toLocaleString()}</span>
                         ${course.originalPrice ? `<span class="text-xs text-[#9aa2b1] line-through">₦${course.originalPrice.toLocaleString()}</span>` : ''}
                     </div>
-                    <a class="text-primary text-sm font-bold hover:underline flex items-center" href="#">
+                    <a class="text-primary text-sm font-bold hover:underline flex items-center" href="${course.courseLink || '#'}">
                         View <span class="material-symbols-outlined text-[18px] ml-1">arrow_forward</span>
                     </a>
                 </div>
@@ -377,31 +440,40 @@ class ComponentLoader {
         `;
         
         // Add click handler for viewing details
-        const viewLink = card.querySelector('a');
-        viewLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            this.viewCourseDetails(course);
-        });
+        // const viewLink = card.querySelector('a');
+        // viewLink.addEventListener('click', (e) => {
+        //     e.preventDefault();
+        //     this.viewCourseDetails(course);
+        // });
         
         return card;
     }
 
-  viewCourseDetails(course) {
-    const phone = '2347063484232'; // QEFAS WhatsApp number
+//   viewCourseDetails(course) {
+//     const phone = '2347063484232'; // QEFAS WhatsApp number
 
-    const message = `
-Hello QEFAS 👋
-I’m a parent interested in the *${course.title}*.
+//     const message = `
+// Hello QEFAS 👋
+// I’m a parent interested in the *${course.title}*.
 
-Class Level: ${course.level}
-Category: ${course.badge}
-Price: ₦${course.price.toLocaleString()}
+// Class Level: ${course.level}
+// Category: ${course.badge}
+// Price: ₦${course.price.toLocaleString()}
 
-Please share full details and enrollment steps.
-    `.trim();
+// Please share full details and enrollment steps.
+//     `.trim();
 
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
+//     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+//     window.open(url, '_blank');
+// }
+viewCourseDetails(course) {
+    // If you want to perform logic before redirecting
+    if (course.courseLink) {
+        window.location.href = course.courseLink; // Redirects in same tab
+        // Or: window.open(course.courseLink, '_blank'); // Opens in new tab
+    } else {
+        console.warn("No link found for this course");
+    }
 }
 
 

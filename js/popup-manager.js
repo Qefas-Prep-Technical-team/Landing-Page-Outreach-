@@ -248,7 +248,11 @@ class PopupManager {
 async submitForm() {
     const submitBtn = this.form.querySelector('.popup-submit');
     const originalBtnText = submitBtn.innerHTML;
+    // --- ADD THESE LINES TO FIX THE ERROR ---
+    const channelSelect = document.getElementById('referralChannel');
+    const selectedOption = channelSelect.options[channelSelect.selectedIndex];
 // Inside submitForm()
+console.log(channelSelect.value, selectedOption.textContent);
 const formData = {
     parentName: document.getElementById('parentName').value.trim(),
     childClass: document.getElementById('childClass').value,
@@ -294,38 +298,38 @@ const formData = {
     }
 }
 
-    validateForm(data) {
-        const errors = [];
-        
-        if (!data.parentName) {
-            errors.push('Please enter your name');
-            document.getElementById('parentName').focus();
-        }
-        
-        if (!data.childClass) {
-            errors.push('Please select your child\'s class');
-            document.getElementById('childClass').focus();
-        }
-        
-        const phoneRegex = /^[0-9]{10}$/;
-        if (!phoneRegex.test(data.whatsapp)) {
-            errors.push('Please enter a valid 10-digit phone number');
-            document.getElementById('whatsapp').focus();
-        }
-        // Inside validateForm(data)
-if (!data.source) {
-    errors.push('Please tell us how you heard about us');
-    document.getElementById('referralChannel').focus();
-}
-        
-        if (errors.length > 0) {
-            alert(errors.join('\n'));
-            return false;
-        }
-        
-        return true;
-
+   validateForm(data) {
+    const errors = [];
+    
+    if (!data.parentName) {
+        errors.push('Please enter your name');
+        document.getElementById('parentName').focus();
     }
+    
+    if (!data.childClass) {
+        errors.push('Please select your child\'s class');
+        document.getElementById('childClass').focus();
+    }
+    
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(data.whatsapp)) {
+        errors.push('Please enter a valid 10-digit phone number');
+        document.getElementById('whatsapp').focus();
+    }
+
+    // FIXED: Check data.channelId instead of data.source
+    if (!data.channelId || data.channelId === "") {
+        errors.push('Please tell us how you heard about us');
+        document.getElementById('referralChannel').focus();
+    }
+    
+    if (errors.length > 0) {
+        alert(errors.join('\n'));
+        return false;
+    }
+    
+    return true;
+}
 
 
     showNotification(message) {

@@ -37,24 +37,24 @@ Please share details.`;
 });
 
 
-document.addEventListener('click', (e) => {
+// document.addEventListener('click', (e) => {
 
-    const courseLink = e.target.closest('[data-course-whatsapp]');
-    if (!courseLink) return;
+//     const courseLink = e.target.closest('[data-course-whatsapp]');
+//     if (!courseLink) return;
 
-    const courseName = courseLink.dataset.course || 'a course';
+//     const courseName = courseLink.dataset.course || 'a course';
 
-    const phone = '2347063484232';
+//     const phone = '2347063484232';
 
-    const message = `Hello QEFAS 👋 
+//     const message = `Hello QEFAS 👋 
 
-I'd like to get more information about:
-📚 *Course:* ${courseName}
-⏳ *Duration:* 12 Weeks (Recorded)
-💰 *Price:* ₦1,500
+// I'd like to get more information about:
+// 📚 *Course:* ${courseName}
+// ⏳ *Duration:* 12 Weeks (Recorded)
+// 💰 *Price:* ₦1,500
 
-Please share the full details on how to get started.`;
+// Please share the full details on how to get started.`;
 
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
-});
+//     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+//     window.open(url, '_blank');
+// });
