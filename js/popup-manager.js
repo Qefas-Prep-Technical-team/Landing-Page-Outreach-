@@ -102,10 +102,10 @@ class PopupManager {
         <span class="material-symbols-outlined form-icon">campaign</span>
     </div>
 </div>
-                            </div>
-                            <button type="submit" class="popup-submit">
-                                <span>Send Message</span>
-                                <span class="material-symbols-outlined">send</span>
+   </div>
+      <button type="submit" class="popup-submit">
+             <span>Send Message</span>
+            <span class="material-symbols-outlined">send</span>
                             </button>
                             <p class="popup-privacy">
                                 We respect your privacy. No spam, ever.
@@ -245,105 +245,209 @@ class PopupManager {
         return this.popup?.classList.contains('active');
     }
 
+// async submitForm() {
+//     const submitBtn = this.form.querySelector('.popup-submit');
+//     const originalBtnText = submitBtn.innerHTML;
+//     // --- ADD THESE LINES TO FIX THE ERROR ---
+//     const channelSelect = document.getElementById('referralChannel');
+//     const selectedOption = channelSelect.options[channelSelect.selectedIndex];
+// // Inside submitForm()
+// console.log(channelSelect.value, selectedOption.textContent);
+// const formData = {
+//     parentName: document.getElementById('parentName').value.trim(),
+//     childClass: document.getElementById('childClass').value,
+//     whatsapp: document.getElementById('whatsapp').value.trim(),
+//     channelId: channelSelect.value,        // Grabs the _id from <option value="...">
+//     channelName: selectedOption.textContent // Grabs the "Facebook" text
+// };
+
+
+
+//     if (!this.validateForm(formData)) return;
+
+//     try {
+//         // Disable button to prevent double-submission
+//         submitBtn.disabled = true;
+//         submitBtn.innerText = 'Sending...';
+
+//         const res = await fetch('https://selfpaced-tracker.vercel.app/api/inquiries', {
+//             method: 'POST',
+//             mode: 'cors', // Explicitly set cors mode
+//             headers: { 
+//                 'Content-Type': 'application/json' 
+//             },
+//             body: JSON.stringify(formData),
+//         });
+
+//         const data = await res.json();
+
+//         if (res.ok && data.success) {
+//             this.showNotification('Success! Inquiry saved.');
+//             this.closePopup();
+//         } else {
+//             // Handle specific status codes (like 409 Conflict)
+//             this.showNotification(`Error: ${data.error || 'Failed to save'}`);
+//         }
+//     } catch (err) {
+//         console.error('Fetch error:', err);
+//         this.showNotification('Connection error. Please check your internet.');
+//     } finally {
+//         // Re-enable button
+//         submitBtn.disabled = false;
+//         submitBtn.innerHTML = originalBtnText;
+//     }
+// }
+
 async submitForm() {
     const submitBtn = this.form.querySelector('.popup-submit');
     const originalBtnText = submitBtn.innerHTML;
-    // --- ADD THESE LINES TO FIX THE ERROR ---
+    
     const channelSelect = document.getElementById('referralChannel');
     const selectedOption = channelSelect.options[channelSelect.selectedIndex];
-// Inside submitForm()
-console.log(channelSelect.value, selectedOption.textContent);
+const rawPhone = document.getElementById('whatsapp').value.trim();
+
 const formData = {
     parentName: document.getElementById('parentName').value.trim(),
     childClass: document.getElementById('childClass').value,
-    whatsapp: document.getElementById('whatsapp').value.trim(),
-    channelId: channelSelect.value,        // Grabs the _id from <option value="...">
-    channelName: selectedOption.textContent // Grabs the "Facebook" text
+    rawPhone, // 👈 keep raw
+    whatsapp: `+234${rawPhone}`,
+    channelId: channelSelect.value,
+    channelName: selectedOption.textContent
 };
 
-
-
+    // 1. Basic Client-Side Validation (Regex)
     if (!this.validateForm(formData)) return;
 
     try {
-        // Disable button to prevent double-submission
+        // Disable button and show loading state
         submitBtn.disabled = true;
-        submitBtn.innerText = 'Sending...';
+        submitBtn.innerHTML = 'Verifying WhatsApp...';
+this.showNotification('Verifying WhatsApp number…', 'success');
 
+
+        /* --- 2. START TWILIO VERIFICATION CHECK --- */
+        const verifyRes = await fetch('https://selfpaced-tracker.vercel.app/api/whatsapp/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ phoneNumber: formData.whatsapp }),
+        });
+
+        const verifyData = await verifyRes.json();
+        this.showNotification('WhatsApp number verified ✔️', 'success');
+
+        console.log(verifyData)
+
+       if (!verifyRes.ok || !verifyData.success) {
+    this.showNotification('Could not verify phone number. Try again.', 'error');
+    return;
+}
+
+if (!verifyData.isValid) {
+    this.showNotification('Invalid phone number format.', 'error');
+    return;
+}
+
+if (!verifyData.isWhatsAppLikely) {
+    this.showNotification('This number is not likely on WhatsApp.', 'error');
+    return;
+}
+
+        /* --- END VERIFICATION CHECK --- */
+
+        submitBtn.innerHTML = 'Saving Inquiry...';
+
+        // 3. Final submission to your tracker
         const res = await fetch('https://selfpaced-tracker.vercel.app/api/inquiries', {
             method: 'POST',
-            mode: 'cors', // Explicitly set cors mode
-            headers: { 
-                'Content-Type': 'application/json' 
-            },
+            mode: 'cors',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData),
         });
 
         const data = await res.json();
 
         if (res.ok && data.success) {
-            this.showNotification('Success! Inquiry saved.');
+            this.showNotification('Message sent successfully 🎉', 'success');
+
             this.closePopup();
         } else {
-            // Handle specific status codes (like 409 Conflict)
             this.showNotification(`Error: ${data.error || 'Failed to save'}`);
         }
     } catch (err) {
-        console.error('Fetch error:', err);
-        this.showNotification('Connection error. Please check your internet.');
+        console.error('Submission error:', err);
+        this.showNotification('Connection error. Please try again.');
+        this.showNotification('This number is not on WhatsApp', 'error');
+this.showNotification('Invalid phone number', 'error');
+this.showNotification('Verification failed', 'error');
+
     } finally {
-        // Re-enable button
         submitBtn.disabled = false;
         submitBtn.innerHTML = originalBtnText;
     }
 }
 
-   validateForm(data) {
+validateForm(data) {
     const errors = [];
-    
+
     if (!data.parentName) {
         errors.push('Please enter your name');
-        document.getElementById('parentName').focus();
-    }
-    
-    if (!data.childClass) {
-        errors.push('Please select your child\'s class');
-        document.getElementById('childClass').focus();
-    }
-    
-    const phoneRegex = /^[0-9]{10}$/;
-    if (!phoneRegex.test(data.whatsapp)) {
-        errors.push('Please enter a valid 10-digit phone number');
-        document.getElementById('whatsapp').focus();
     }
 
-    // FIXED: Check data.channelId instead of data.source
-    if (!data.channelId || data.channelId === "") {
-        errors.push('Please tell us how you heard about us');
-        document.getElementById('referralChannel').focus();
+    if (!data.childClass) {
+        errors.push("Please select your child's class");
     }
-    
+
+    // ✅ Validate RAW phone, not +234
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(data.rawPhone)) {
+        errors.push('Enter a valid 10-digit WhatsApp number');
+    }
+
+    if (!data.channelId) {
+        errors.push('Please tell us how you heard about us');
+    }
+
     if (errors.length > 0) {
-        alert(errors.join('\n'));
+        this.showNotification(errors[0], 'error');
         return false;
     }
-    
+
     return true;
 }
 
 
-    showNotification(message) {
-        // Create a simple notification
-        const notification = document.createElement('div');
-        notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-[10000] animate-fade-in';
-        notification.textContent = message;
-        document.body.appendChild(notification);
-        
-        // Remove after 3 seconds
-        setTimeout(() => {
-            notification.remove();
-        }, 3000);
+
+showNotification(message, type = 'success') {
+    // Remove existing notification (avoid stacking)
+    const existing = document.querySelector('.popup-notification');
+    if (existing) existing.remove();
+
+    const notification = document.createElement('div');
+    notification.className = `
+        popup-notification
+        ${type === 'error' ? 'error' : 'success'}
+    `;
+
+    notification.innerHTML = message;
+
+    // 👇 attach INSIDE popup container
+    const container = this.popup?.querySelector('.popup-container');
+    if (!container) {
+        alert(message); // hard fallback
+        return;
     }
+
+    container.prepend(notification);
+
+    setTimeout(() => {
+        notification.classList.add('show');
+    }, 10);
+
+    setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => notification.remove(), 300);
+    }, 3500);
+}
 }
 
 // Initialize when DOM is loaded
