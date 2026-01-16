@@ -401,53 +401,52 @@ class ComponentLoader {
         this.updateCourseCount(filteredCourses.length);
     }
 
-    createCourseCard(course) {
-        const card = document.createElement('div');
-        card.className = 'group flex flex-col bg-white rounded-xl overflow-hidden border border-[#e5e7eb] shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 course-fade-in';
-        card.innerHTML = `
-            <div class="relative w-full aspect-video bg-gray-200">
-                <div class="w-full h-full bg-cover bg-center" 
-                     style="background-image: url('${course.image}')"></div>
-                <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-bold ${course.badgeColor} uppercase tracking-wider">
-                    ${course.badge}
-                </div>
+   createCourseCard(course) {
+    const card = document.createElement('div');
+    card.className = 'group flex flex-col bg-white rounded-xl overflow-hidden border border-[#e5e7eb] shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 course-fade-in';
+    
+    // We add 'course-link' class and data attributes to the <a> tag below
+    card.innerHTML = `
+        <div class="relative w-full aspect-video bg-gray-200">
+            <div class="w-full h-full bg-cover bg-center" 
+                 style="background-image: url('${course.image}')"></div>
+            <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-bold ${course.badgeColor} uppercase tracking-wider">
+                ${course.badge}
             </div>
-            <div class="flex flex-col flex-1 p-4 gap-3">
-                <div class="flex items-center gap-1 text-[#F59E0B]">
-                    <span class="material-symbols-outlined text-[16px] fill-current">star</span>
-                    <span class="text-xs font-bold text-[#111318] mt-0.5">${course.rating.toFixed(1)}</span>
-                    <span class="text-xs text-[#616f89] mt-0.5">(${course.reviewCount})</span>
-                </div>
-                <h3 class="text-[#111318] text-lg font-bold leading-tight line-clamp-2 min-h-[3rem]">
-                    ${course.title}
-                </h3>
-                <div class="flex items-center gap-2 text-xs text-[#616f89] mb-1">
-                    <span class="material-symbols-outlined text-[16px]">school</span>
-                    <span>${course.lessons} Lessons</span>
-                    <span class="w-1 h-1 rounded-full bg-[#616f89]"></span>
-                    <span>${course.duration}</span>
-                </div>
-                <div class="mt-auto pt-3 border-t border-[#f0f2f4] flex items-center justify-between">
-                    <div class="flex flex-col">
-                        <span class="text-lg font-bold text-[#111318]">₦${course.price.toLocaleString()}</span>
-                        ${course.originalPrice ? `<span class="text-xs text-[#9aa2b1] line-through">₦${course.originalPrice.toLocaleString()}</span>` : ''}
-                    </div>
-                    <a class="text-primary text-sm font-bold hover:underline flex items-center" href="${course.courseLink || '#'}">
-                        View <span class="material-symbols-outlined text-[18px] ml-1">arrow_forward</span>
-                    </a>
-                </div>
+        </div>
+        <div class="flex flex-col flex-1 p-4 gap-3">
+            <div class="flex items-center gap-1 text-[#F59E0B]">
+                <span class="material-symbols-outlined text-[16px] fill-current">star</span>
+                <span class="text-xs font-bold text-[#111318] mt-0.5">${course.rating.toFixed(1)}</span>
+                <span class="text-xs text-[#616f89] mt-0.5">(${course.reviewCount})</span>
             </div>
-        `;
-        
-        // Add click handler for viewing details
-        // const viewLink = card.querySelector('a');
-        // viewLink.addEventListener('click', (e) => {
-        //     e.preventDefault();
-        //     this.viewCourseDetails(course);
-        // });
-        
-        return card;
-    }
+            <h3 class="text-[#111318] text-lg font-bold leading-tight line-clamp-2 min-h-[3rem]">
+                ${course.title}
+            </h3>
+            <div class="flex items-center gap-2 text-xs text-[#616f89] mb-1">
+                <span class="material-symbols-outlined text-[16px]">school</span>
+                <span>${course.lessons} Lessons</span>
+                <span class="w-1 h-1 rounded-full bg-[#616f89]"></span>
+                <span>${course.duration}</span>
+            </div>
+            <div class="mt-auto pt-3 border-t border-[#f0f2f4] flex items-center justify-between">
+                <div class="flex flex-col">
+                    <span class="text-lg font-bold text-[#111318]">₦${course.price.toLocaleString()}</span>
+                    ${course.originalPrice ? `<span class="text-xs text-[#9aa2b1] line-through">₦${course.originalPrice.toLocaleString()}</span>` : ''}
+                </div>
+                
+                <a class="course-link text-primary text-sm font-bold hover:underline flex items-center" 
+                   href="${course.courseLink || '#'}"
+                   data-track="course_view_courses"
+                   data-name="${course.title}">
+                    View <span class="material-symbols-outlined text-[18px] ml-1">arrow_forward</span>
+                </a>
+            </div>
+        </div>
+    `;
+    
+    return card;
+}
 
 //   viewCourseDetails(course) {
 //     const phone = '2347063484232'; // QEFAS WhatsApp number
