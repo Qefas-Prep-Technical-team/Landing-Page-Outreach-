@@ -21,7 +21,7 @@ class PopupManager {
 
     async loadChannels() {
     try {
-        const res = await fetch('http://localhost:3000/api/channels/source');
+        const res = await fetch('https://selfpaced-tracker.vercel.app/api/channels/source');
         console.log(res)
         const result = await res.json();
         
@@ -270,7 +270,7 @@ class PopupManager {
 //         submitBtn.disabled = true;
 //         submitBtn.innerText = 'Sending...';
 
-//         const res = await fetch('http://localhost:3000/api/inquiries', {
+//         const res = await fetch('https://selfpaced-tracker.vercel.app/api/inquiries', {
 //             method: 'POST',
 //             mode: 'cors', // Explicitly set cors mode
 //             headers: { 
@@ -326,7 +326,7 @@ this.showNotification('Verifying WhatsApp number…', 'success');
 
 
         /* --- 2. START TWILIO VERIFICATION CHECK --- */
-        const verifyRes = await fetch('http://localhost:3000/api/whatsapp/verify', {
+        const verifyRes = await fetch('https://selfpaced-tracker.vercel.app/api/whatsapp/verify', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ phoneNumber: formData.whatsapp }),
@@ -357,7 +357,7 @@ if (!verifyData.isWhatsAppLikely) {
         submitBtn.innerHTML = 'Saving Inquiry...';
 
         // 3. Final submission to your tracker
-        const res = await fetch('http://localhost:3000/api/inquiries', {
+        const res = await fetch('https://selfpaced-tracker.vercel.app/api/inquiries', {
             method: 'POST',
             mode: 'cors',
             headers: { 'Content-Type': 'application/json' },

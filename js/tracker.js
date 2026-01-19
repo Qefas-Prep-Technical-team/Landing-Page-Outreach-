@@ -13,7 +13,7 @@ document.addEventListener('click', (e) => {
             path: window.location.pathname
         };
 
-        fetch('http://localhost:3000/api/inquiries/track-click', {
+        fetch('https://selfpaced-tracker.vercel.app/api/inquiries/track-click', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(clickData),
