@@ -58,3 +58,25 @@ Please share full details.`;
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
 });
+
+
+
+document.addEventListener('click', (e) => {
+
+    // FREE TRIAL → WhatsApp
+    if (e.target.closest('[data-view-Syllabus]')) {
+        // console.log('Free Trial clicked');
+
+        const phone = '2347063484232';
+
+        const message = 
+`Hello QEFAS 👋
+Please share the list of available syllabuses.
+
+Thank you.`;
+
+        const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+        window.open(url, '_blank');
+    }
+
+});

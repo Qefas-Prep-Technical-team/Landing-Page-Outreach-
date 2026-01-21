@@ -104,7 +104,7 @@ class PopupManager {
 </div>
    </div>
       <button type="submit" class="popup-submit">
-             <span>Send Message</span>
+             <span>Send Inquiry</span>
             <span class="material-symbols-outlined">send</span>
                             </button>
                             <p class="popup-privacy">

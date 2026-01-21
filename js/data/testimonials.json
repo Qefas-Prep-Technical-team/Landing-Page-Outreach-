@@ -1,17 +1,27 @@
 [
-    {
-        "text": "QEFAS has transformed my learning experience!",
-        "author": "John Doe",
-        "role": "Parent"
-    },
-    {
-        "text": "The courses are top-notch and easy to follow.",
-        "author": "Jane Smith",
-        "role": "Student"
-    },
-    {
-        "text": "I love the interactive lessons and clear explanations.",
-        "author": "Michael Johnson",
-        "role": "Teacher"
-    }
+  {
+    "text": "QEFAS has really helped my child improve academically. The lessons are well explained, and learning is now more enjoyable at home.",
+    "author": "Mrs. Ade",
+    "role": "Parent"
+  },
+  {
+    "text": "Since my child started learning with QEFAS, I’ve noticed better understanding and confidence in class. I’m very satisfied with the quality.",
+    "author": "Mr. Musa",
+    "role": "Parent"
+  },
+  {
+    "text": "QEFAS makes learning simple and easy to follow. The teachers explain very well, and I understand topics better now.",
+    "author": "Sadiya K.",
+    "role": "Student"
+  },
+  {
+    "text": "The lessons on QEFAS are clear and interactive. I like how everything is arranged and easy to revise anytime.",
+    "author": "Daniel O.",
+    "role": "Student"
+  },
+  {
+    "text": "QEFAS is a great support system for both teachers and students. The learning materials are structured, engaging, and effective.",
+    "author": "Mr. Okafor",
+    "role": "Teacher"
+  }
 ]

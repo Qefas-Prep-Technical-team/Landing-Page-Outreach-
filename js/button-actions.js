@@ -1,4 +1,4 @@
-console.log('Button Actions JS loaded');
+// console.log('Button Actions JS loaded');
 
 document.addEventListener('click', (e) => {
     // Desktop + Mobile buttons
@@ -14,21 +14,21 @@ document.addEventListener('click', (e) => {
 });
 
 
-console.log('Button Actions JS loaded');
+// console.log('Button Actions JS loaded');
 
 document.addEventListener('click', (e) => {
 
     // FREE TRIAL → WhatsApp
-    if (e.target.closest('[data-free-trial]')) {
-        console.log('Free Trial clicked');
+    if (e.target.closest('[data-view-Syllabus]')) {
+        // console.log('Free Trial clicked');
 
         const phone = '2347063484232';
 
         const message = 
 `Hello QEFAS 👋
-I’m a parent interested in a FREE trial lesson.
-My child is in JSS / SSS.
-Please share details.`;
+Please share the list of available syllabuses.
+
+Thank you.`;
 
         const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
         window.open(url, '_blank');

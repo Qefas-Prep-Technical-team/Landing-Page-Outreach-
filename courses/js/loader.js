@@ -98,7 +98,7 @@ class ComponentLoader {
                     badge: "Senior Secondary",
                     badgeColor: "text-purple-600",
                     description: "This course contains SSS1 courses such as Mathematics, English, Chemistry, etc.",
-                    courseLink: "https://qefas.com/product/sss1-course-self-paced-class/" // Add this unique link for each course
+                    courseLink: "https://qefas.com/product/sss1-course-self-paced-class-promo/" // Add this unique link for each course
                 },
                 {
                     id: 2,
@@ -116,7 +116,7 @@ class ComponentLoader {
                     badge: "Senior Secondary",
                     badgeColor: "text-purple-600",
                     description: "This course contains SSS2 courses such as Mathematics, English, Chemistry, etc.",
-                     courseLink: "https://qefas.com/product/sss2-course-self-paced-class/" // Add this unique link for each course
+                     courseLink: "https://qefas.com/product/sss2-course-self-paced-class-promo/" // Add this unique link for each course
                 },
                 {
                     id: 3,
@@ -134,7 +134,7 @@ class ComponentLoader {
                     badge: "Senior Secondary",
                     badgeColor: "text-purple-600",
                     description: "This course contains SSS3 courses such as Mathematics, English, Chemistry, etc.",
-                     courseLink: "https://qefas.com/product/sss3-course-self-paced-class/" // Add this unique link for each course
+                     courseLink: "https://qefas.com/product/sss3-course-self-paced-class-promo/" // Add this unique link for each course
                 },
                 {
                     id: 4,
@@ -152,7 +152,7 @@ class ComponentLoader {
                     badge: "Junior Secondary",
                     badgeColor: "text-orange-600",
                     description: "Take control of your learning with this self-paced course! Master the core subjects of Mathematics, English, Basic Science, and Basic Technology through easy-to-follow lessons. Learn at your own speed, build your confidence, and get the grades you’ve always wanted!",
-                     courseLink: "https://qefas.com/product/jss1-course-self-paced-class/" // Add this unique link for each course
+                     courseLink: "https://qefas.com/product/jss1-course-self-paced-class-promo/" // Add this unique link for each course
                 },
                 {
                     id: 5,
@@ -170,7 +170,7 @@ class ComponentLoader {
                     badge: "Junior Secondary",
                     badgeColor: "text-orange-600",
                     description: "Take control of your learning with this self-paced course! Master the core subjects of Mathematics, English, Basic Science, and Basic Technology through easy-to-follow lessons. Learn at your own speed, build your confidence, and get the grades you’ve always wanted!",
-                     courseLink: "https://qefas.com/product/jss2-course-self-paced-class/" // Add this unique link for each course
+                     courseLink: "https://qefas.com/product/jss2-course-self-paced-class-promo/" // Add this unique link for each course
                 },
                 {
                     id: 6,
@@ -188,7 +188,7 @@ class ComponentLoader {
                     badge: "Junior Secondary",
                     badgeColor: "text-orange-600",
                     description: "Take control of your learning with this self-paced course! Master the core subjects of Mathematics, English, Basic Science, and Basic Technology through easy-to-follow lessons. Learn at your own speed, build your confidence, and get the grades you’ve always wanted!",
-                     courseLink: "https://qefas.com/product/jss3-course-self-paced-class/" // Add this unique link for each course
+                     courseLink: "https://qefas.com/product/jss3-course-self-paced-class-promo/" // Add this unique link for each course
                 },
                 {
                     id: 7,
